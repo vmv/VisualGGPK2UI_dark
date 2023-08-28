@@ -1,0 +1,34 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:scb="clr-namespace:System.Windows.Media;assembly=PresentationCore">
+
+                    
+    <Color x:Key="StringInterpolation">#ADDb67</Color>
+    <Color x:Key="Punctuation">#C9D1D9</Color>
+    <Color x:Key="NumberLiteral">#F78C6C</Color>
+    <Color x:Key="Comment">#6A9955</Color>
+    <Color x:Key="MethodCall">#87CEF9</Color>
+    <Color x:Key="GetSetAddRemove">#87CEF9</Color>
+    <Color x:Key="Visibility">#87CEF9</Color>
+    <Color x:Key="ParameterModifiers">#87CEF9</Color>
+    <Color x:Key="Modifiers">#87CEF9</Color>
+    <Color x:Key="String">#87CEF9</Color>
+    <Color x:Key="Char">#F92672</Color>
+    <Color x:Key="Preprocessor">#C9D1D9</Color>
+    <Color x:Key="TrueFalse">#6495ED</Color>
+    <Color x:Key="Keywords">#87CEF9</Color>
+    <Color x:Key="ValueTypeKeywords">#87CEF9</Color>
+    <Color x:Key="SemanticKeywords">#87CEF9</Color>
+    <Color x:Key="NamespaceKeywords">#87CEF9</Color>
+    <Color x:Key="ReferenceTypeKeywords">#87CEF9</Color>
+    <Color x:Key="ThisOrBaseReference">#20B2AA</Color>
+    <Color x:Key="NullOrValueKeywords">#87CEF9</Color>
+    <Color x:Key="GotoKeywords">#87CEF9</Color>
+    <Color x:Key="ContextKeywords">#87CEF9</Color>
+    <Color x:Key="ExceptionKeywords">#87CEF9</Color>
+    <Color x:Key="CheckedKeyword">#87CEF9</Color>
+    <Color x:Key="UnsafeKeywords">#87CEF9</Color>
+    <Color x:Key="OperatorKeywords">#87CEF9</Color>
+
+
+</ResourceDictionary>

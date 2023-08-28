@@ -1,0 +1,26 @@
+﻿<ui:FluentWindow
+    x:Class="VisualGGPK2.BackgroundDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Background Working"
+    Width="400"
+    Height="100"
+    Closing="OnClosing"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+    <Grid
+        x:Name="background_working"
+        Background="#FF313338"
+        MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+        <TextBlock
+            x:Name="MessageTextBlock"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="24"
+            Foreground="LightGray"
+            Text="starting . . ."
+            TextWrapping="Wrap" />
+    </Grid>
+</ui:FluentWindow>

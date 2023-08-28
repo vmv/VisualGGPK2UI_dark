@@ -1,0 +1,135 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Authors>aianlinb</Authors>
+    <Copyright>Copyright © 2020-2023 aianlinb</Copyright>
+    <Version>1.8</Version>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <DebugType>embedded</DebugType>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <ApplicationIcon>Resources\visualggpk2.ico</ApplicationIcon>
+    <StartupObject>VisualGGPK2.App</StartupObject>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="FindReplace.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\silver_cube.png" />
+    <None Remove="Resources\48apple_dir.ico" />
+    <None Remove="Resources\48dark_dir.ico" />
+    <None Remove="Resources\48graymac_dir.ico" />
+    <None Remove="Resources\48gray_dir.ico" />
+    <None Remove="Resources\48_gray_dir.ico" />
+    <None Remove="Resources\black_dir.ico" />
+    <None Remove="Resources\blue_dir.ico" />
+    <None Remove="Resources\blue_file.ico" />
+    <None Remove="Resources\dirblack.ico" />
+    <None Remove="Resources\gray2_dir.ico" />
+    <None Remove="Resources\gray3_dir.ico" />
+    <None Remove="Resources\graymac_dir.ico" />
+    <None Remove="Resources\gray_dir.ico" />
+    <None Remove="Resources\v48graymac_dir.ico" />
+    <None Remove="Resources\v48gray_dir.ico" />
+    <None Remove="Resources\visualggpk2.png" />
+    <None Remove="Resources\v_black_dir.ico" />
+    <None Remove="Resources\v_gray_dir.ico" />
+    <None Remove="Resources\x_dir.ico" />
+    <None Remove="silver_cube.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="C#.xaml" />
+    <Page Remove="Resources\C#.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\visualggpk2.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\48apple_dir.ico" />
+    <EmbeddedResource Include="Resources\48dark_dir.ico" />
+    <EmbeddedResource Include="Resources\48graymac_dir.ico" />
+    <EmbeddedResource Include="Resources\48gray_dir.ico" />
+    <EmbeddedResource Include="Resources\48_gray_dir.ico" />
+    <EmbeddedResource Include="Resources\black_dir.ico" />
+    <EmbeddedResource Include="Resources\blue_dir.ico" />
+    <EmbeddedResource Include="Resources\blue_file.ico" />
+    <EmbeddedResource Include="Resources\dir.ico" />
+    <EmbeddedResource Include="Resources\dirblack.ico" />
+    <EmbeddedResource Include="Resources\file.ico" />
+    <EmbeddedResource Include="Resources\gray2_dir.ico" />
+    <EmbeddedResource Include="Resources\gray3_dir.ico" />
+    <EmbeddedResource Include="Resources\graymac_dir.ico" />
+    <EmbeddedResource Include="Resources\gray_dir.ico" />
+    <EmbeddedResource Include="Resources\v48graymac_dir.ico" />
+    <EmbeddedResource Include="Resources\v48gray_dir.ico" />
+    <EmbeddedResource Include="Resources\v_black_dir.ico" />
+    <EmbeddedResource Include="Resources\v_gray_dir.ico" />
+    <EmbeddedResource Include="Resources\x_dir.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BrotliSharpLib" Version="0.3.3" />
+    <PackageReference Include="FluentIcons.Common" Version="1.1.211" />
+    <PackageReference Include="FluentIcons.WPF" Version="1.1.211" />
+    <PackageReference Include="WPF-UI" Version="3.0.0-preview.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DirectXTexWrapper\DirectXTexWrapper.vcxproj" />
+    <ProjectReference Include="..\LibBundle\LibBundle.csproj" />
+    <ProjectReference Include="..\LibDat2\LibDat2.csproj" />
+    <ProjectReference Include="..\LibGGPK2\LibGGPK2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit">
+      <HintPath>D:\Projects\AvalonEdit_dark_syntaxC#\ICSharpCode.AvalonEdit\bin\Release\net7.0-windows\ICSharpCode.AvalonEdit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\silver_cube.png" />
+    <EmbeddedResource Include="Resources\C#.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Resource Include="Resources\visualggpk2.png" />
+    <Resource Include="silver_cube.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

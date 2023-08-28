@@ -1,0 +1,99 @@
+﻿<ui:FluentWindow
+    x:Class="VisualGGPK2.ErrorWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="ErrorWindow"
+    Width="600"
+    Height="500"
+    Background="{x:Null}"
+    BorderBrush="Black"
+    Closing="OnClosing"
+    Foreground="{x:Null}"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBox
+                x:Name="ErrorBox"
+                Grid.Row="0"
+                Padding="2"
+                AcceptsReturn="True"
+                Background="#FF313338"
+                BorderBrush="Black"
+                HorizontalScrollBarVisibility="Auto"
+                IsReadOnly="True"
+                ScrollViewer.CanContentScroll="True"
+                Text="Loading Exception . . ."
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Auto" />
+        </Grid>
+
+        <Grid Grid.Row="1" Background="#FF313338">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".25*" />
+                <ColumnDefinition Width=".25*" />
+                <ColumnDefinition Width=".25*" />
+                <ColumnDefinition Width=".25*" />
+            </Grid.ColumnDefinitions>
+            <ui:Button
+                x:Name="ButtonCopy"
+                Grid.Column="0"
+                Width="100"
+                Height="30"
+                Margin="0,0,0,0"
+                Padding="0,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="OnCopyClick"
+                Content="Copy"
+                Foreground="LightGray"
+                IsEnabled="False"
+                ToolTipService.ToolTip="copy" />
+            <ui:Button
+                x:Name="ButtonGitHub"
+                Grid.Column="1"
+                Width="100"
+                Height="30"
+                Padding="0,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="OnGitHubClick"
+                Content="GitHub"
+                ToolTipService.ToolTip="open GitHub webpage" />
+            <ui:Button
+                x:Name="ButtonResume"
+                Grid.Column="2"
+                Width="100"
+                Height="30"
+                Margin="0,0,0,0"
+                Padding="0,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="OnResumeClick"
+                Content="Resume"
+                Foreground="LightGray"
+                IsEnabled="False"
+                ToolTipService.ToolTip="resume" />
+            <ui:Button
+                x:Name="ButtonStop"
+                Grid.Column="3"
+                Width="100"
+                Height="30"
+                Margin="0,0,0,0"
+                Padding="0,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="OnStopClick"
+                Content="Stop"
+                Foreground="LightGray"
+                IsEnabled="False"
+                ToolTipService.ToolTip="stop" />
+        </Grid>
+    </Grid>
+</ui:FluentWindow>
