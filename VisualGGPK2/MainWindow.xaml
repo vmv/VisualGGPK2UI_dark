@@ -1240,7 +1240,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom">
                     <Run Foreground="DarkGray">
-                        v1.9.0
+                        v1.9.2
                     </Run>
                 </ui:TextBlock>
                 <ui:Image
