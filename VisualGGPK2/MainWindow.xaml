@@ -1240,7 +1240,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom">
                     <Run Foreground="DarkGray">
-                        v1.9.2
+                        v1.9.3
                     </Run>
                 </ui:TextBlock>
                 <ui:Image
@@ -1251,7 +1251,7 @@
                     VerticalAlignment="Bottom"
                     CornerRadius="4"
                     RenderOptions.BitmapScalingMode="HighQuality"
-                    Source="/silver_cube.png"
+                    Source="/visualggpk2.png"
                     ToolTipService.ToolTip="VisualGGPK2 UI" />
             </StackPanel>
 

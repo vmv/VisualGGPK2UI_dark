@@ -23,7 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\epic_logo.png" />
     <None Remove="Assets\silver_cube.png" />
+    <None Remove="Assets\tencent_logo.png" />
+    <None Remove="epic_logo.png" />
     <None Remove="Resources\48apple_dir.ico" />
     <None Remove="Resources\48dark_dir.ico" />
     <None Remove="Resources\48graymac_dir.ico" />
@@ -43,7 +46,8 @@
     <None Remove="Resources\v_black_dir.ico" />
     <None Remove="Resources\v_gray_dir.ico" />
     <None Remove="Resources\x_dir.ico" />
-    <None Remove="silver_cube.png" />
+    <None Remove="tencent_logo.png" />
+    <None Remove="visualggpk2.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -100,12 +104,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\silver_cube.png" />
     <EmbeddedResource Include="Resources\C#.xaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Resource Include="Assets\epic_logo.png" />
+    <Resource Include="Assets\tencent_logo.png" />
+    <Resource Include="epic_logo.png" />
     <Resource Include="Resources\visualggpk2.png" />
-    <Resource Include="silver_cube.png" />
+    <Resource Include="tencent_logo.png" />
+    <Resource Include="visualggpk2.png" />
   </ItemGroup>
 
   <ItemGroup>
