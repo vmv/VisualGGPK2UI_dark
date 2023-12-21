@@ -84,9 +84,9 @@
 
   <ItemGroup>
     <PackageReference Include="BrotliSharpLib" Version="0.3.3" />
-    <PackageReference Include="FluentIcons.Common" Version="1.1.211" />
-    <PackageReference Include="FluentIcons.WPF" Version="1.1.211" />
-    <PackageReference Include="WPF-UI" Version="3.0.0-preview.6" />
+    <PackageReference Include="FluentIcons.Common" Version="1.1.224" />
+    <PackageReference Include="FluentIcons.WPF" Version="1.1.224" />
+    <PackageReference Include="WPF-UI" Version="3.0.0-preview.13" />
   </ItemGroup>
 
   <ItemGroup>

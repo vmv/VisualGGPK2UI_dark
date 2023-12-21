@@ -34,6 +34,8 @@ using System.Windows;
 using System;
 using TreeViewItem = Wpf.Ui.Controls.TreeViewItem;
 using VisualGGPK2.Properties;
+using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VisualGGPK2
 {
@@ -1688,6 +1690,13 @@ namespace VisualGGPK2
             var fi = new FileInfo(FilePath);
             var t = fi.LastWriteTimeUtc;
             var l = fi.Length;
+            var editPath = Settings.Default;
+            var dir = Path.GetDirectoryName(FilePath);
+            Process.Start(new ProcessStartInfo(dir + @"\PathOfExile_x64.exe")
+            {
+                WorkingDirectory = dir
+            });
+
         loop:
             try
             {
@@ -1716,8 +1725,7 @@ namespace VisualGGPK2
                     root.IsExpanded = true;
 
                     FilterButton.IsEnabled = true;
-                    if (!SteamMode)
-                        AllowGameOpen.IsEnabled = true;
+                    if (!SteamMode) AllowGameOpen.IsEnabled = true;
 
                     TextViewContent.AppendText("\r\n Done!");
                 }
