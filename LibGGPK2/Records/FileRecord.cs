@@ -239,6 +239,8 @@ namespace LibGGPK2.Records
                 case ".gt": // Ground Types
                 case ".idl":
                 case ".idt":
+                case ".it":
+                case ".itc":
                 case ".json":
                 case ".mat": // Materials
                 case ".mtd":

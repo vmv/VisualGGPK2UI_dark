@@ -94,17 +94,5 @@ namespace VisualGGPK2.Properties {
                 this["epicPath"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string editPath {
-            get {
-                return ((string)(this["editPath"]));
-            }
-            set {
-                this["editPath"] = value;
-            }
-        }
     }
 }

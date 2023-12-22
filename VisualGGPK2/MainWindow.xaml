@@ -26,7 +26,6 @@
 
     <ui:FluentWindow.Resources>
         <ResourceDictionary>
-
             <!--  Search Box  -->
             <Thickness x:Key="TextBoxBorderThemeThickness">1,1,1,0</Thickness>
             <Thickness x:Key="TextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
@@ -1116,7 +1115,7 @@
                     x:Name="AllowGameOpen"
                     Width="40"
                     Height="35"
-                    Margin="0,50,0,0"
+                    Margin="0,300,0,0"
                     Padding="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
@@ -1127,10 +1126,10 @@
                     Click="AllowGameOpen_Click"
                     FontSize="20"
                     Foreground="LightGray"
-                    ToolTipService.ToolTip="allow game to be opened">
+                    ToolTipService.ToolTip="Open Game">
                     <ic:SymbolIcon IsFilled="False" Symbol="DesktopCheckmark" />
                 </ui:Button>
-                <ui:TextBlock
+                <!--<ui:TextBlock
                     Margin="0,80,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
@@ -1210,21 +1209,22 @@
                     Content="E"
                     FontSize="20"
                     Foreground="LightGray"
-                    ToolTipService.ToolTip="open Epic" />
+                    ToolTipService.ToolTip="open Epic" />-->
                 <ui:Button
                     x:Name="Restore"
                     Width="35"
                     Height="30"
-                    Margin="0,100,0,0"
+                    Margin="0,250,0,0"
                     Padding="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="Transparent"
                     BorderBrush="Black"
                     BorderThickness="1"
+                    Click="Restore_Click"
                     FontSize="24"
                     Foreground="LightGray"
-                    ToolTipService.ToolTip="restore original ggpk index" Click="Restore_Click">
+                    ToolTipService.ToolTip="restore original ggpk index">
                     <ic:SymbolIcon IsFilled="False" Symbol="ArrowReset" />
                 </ui:Button>
             </StackPanel>

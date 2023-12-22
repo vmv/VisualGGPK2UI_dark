@@ -1692,8 +1692,7 @@ namespace VisualGGPK2
             var l = fi.Length;
             var editPath = Settings.Default;
             var dir = Path.GetDirectoryName(FilePath);
-            Process.Start(new ProcessStartInfo(dir + @"\PathOfExile_x64.exe")
-            {
+            Process.Start(new ProcessStartInfo(dir + @"\PathOfExile_x64.exe") {
                 WorkingDirectory = dir
             });
 
@@ -1701,18 +1700,20 @@ namespace VisualGGPK2
             try
             {
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox {
-                    Title = "Open Game",
-                    Content = "Edit Mode is now closed, you can open the game!\nClose the game and click OK to enter in Edit Mode again!"
+                    Width = 120, Height = 40,
+                    Background = new SolidColorBrush(Color.FromRgb(0x1F, 0x24, 0x28)),
+                    Title = "game mode",
+                    //Content = "Close this to enter in Edit Mode again!"
                 };
                 await uiMessageBox.ShowDialogAsync();
 
                 fi = new FileInfo(FilePath);
                 if (fi.LastWriteTimeUtc != t || fi.Length != l)
                 {
-                    MessageBox.Show(this, "The Content.ggpk has been modified, Now it's going to be reloaded", "GGPK Changed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    //MessageBox.Show(this, "The Content.ggpk has been modified, Now it's going to be reloaded", "GGPK Changed", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                     Tree.Items.Clear();
-                    TextViewContent.Text = "Loading . . .";
+                    //TextViewContent.Text = "Loading . . .";
                     TextViewContent.Visibility = Visibility.Visible;
                     FilterButton.IsEnabled = false;
                     AllowGameOpen.IsEnabled = false;
@@ -1738,7 +1739,7 @@ namespace VisualGGPK2
             }
             catch (IOException)
             {
-                MessageBox.Show(this, "Cannot access the file, make sure you have closed the game!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(this, "Close the game first!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 goto loop;
             }
         }
@@ -1783,16 +1784,6 @@ namespace VisualGGPK2
                 });
             });
         }
-
-        //private async void uiMessage(object sender)
-        //{
-        //    var uiMessageBox = new Wpf.Ui.Controls.MessageBox
-        //    {
-        //        Title = "WPF UI Message Box",
-        //        Content = "Never gonna give you up, never gonna let you down..."
-        //    };
-        //    await uiMessageBox.ShowDialogAsync();
-        //}
 
         private void ImageView_MouseWheel(object sender, MouseWheelEventArgs e)
         {
