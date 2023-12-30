@@ -35,7 +35,6 @@ using System;
 using TreeViewItem = Wpf.Ui.Controls.TreeViewItem;
 using VisualGGPK2.Properties;
 using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VisualGGPK2
 {
@@ -104,7 +103,82 @@ namespace VisualGGPK2
                 {
                     namedColor.Foreground = new SimpleHighlightingBrush(color);
                 }
-            }            
+            }
+
+            // Load color definitions from the JSON file
+            //string jsonFilePath = "syntax_colors_CSharp"; // Provide the actual path
+            //if (File.Exists(jsonFilePath))
+            //{
+            //    string json = File.ReadAllText(jsonFilePath);
+            //    var colorDefinitions = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+
+            //    foreach (var colorDefinition in colorDefinitions)
+            //    {
+            //        var namedColor = highlighting.GetNamedColor(colorDefinition.Key);
+            //        if (namedColor != null)
+            //        {
+            //            namedColor.Foreground = new SimpleHighlightingBrush(ColorConverter.ConvertFromString(colorDefinition.Value));
+            //        }
+            //    }
+            //}
+
+            // Colors for Light Theme syntax C#
+            //highlighting.GetNamedColor("StringInterpolation").Foreground = new SimpleHighlightingBrush(Colors.Black);
+            //highlighting.GetNamedColor("Punctuation").Foreground = new SimpleHighlightingBrush(Colors.Black);
+            //highlighting.GetNamedColor("NumberLiteral").Foreground = new SimpleHighlightingBrush(Colors.Black);
+            //highlighting.GetNamedColor("Comment").Foreground = new SimpleHighlightingBrush(Colors.ForestGreen);
+            //highlighting.GetNamedColor("MethodCall").Foreground = new SimpleHighlightingBrush(Colors.DarkGoldenrod);
+            //highlighting.GetNamedColor("GetSetAddRemove").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("Visibility").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("ParameterModifiers").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("Modifiers").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("String").Foreground = new SimpleHighlightingBrush(Colors.Brown);
+            //highlighting.GetNamedColor("Char").Foreground = new SimpleHighlightingBrush(Colors.Red);
+            //highlighting.GetNamedColor("Preprocessor").Foreground = new SimpleHighlightingBrush(Colors.DarkGray);
+            //highlighting.GetNamedColor("TrueFalse").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("Keywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("ValueTypeKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("SemanticKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("NamespaceKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("ReferenceTypeKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("ThisOrBaseReference").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("NullOrValueKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("GotoKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("ContextKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("ExceptionKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("CheckedKeyword").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("UnsafeKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("OperatorKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+            //highlighting.GetNamedColor("SemanticKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
+
+            // Colors for Dark Theme syntax C#
+            //highlighting.GetNamedColor("StringInterpolation").Foreground = new SimpleHighlightingBrush(Color.FromRgb(173, 219, 103)); // Light Green
+            //highlighting.GetNamedColor("Punctuation").Foreground = new SimpleHighlightingBrush(Color.FromRgb(201, 209, 217)); // ...
+            //highlighting.GetNamedColor("NumberLiteral").Foreground = new SimpleHighlightingBrush(Color.FromRgb(247, 140, 108)); // Light Red
+            //highlighting.GetNamedColor("Comment").Foreground = new SimpleHighlightingBrush(Color.FromRgb(106, 153, 85)); // Dark Green
+            //highlighting.GetNamedColor("MethodCall").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("GetSetAddRemove").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("Visibility").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("ParameterModifiers").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("Modifiers").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("String").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("Char").Foreground = new SimpleHighlightingBrush(Color.FromRgb(249, 38, 114)); // Bright Pink
+            //highlighting.GetNamedColor("Preprocessor").Foreground = new SimpleHighlightingBrush(Color.FromRgb(201, 209, 217)); // Cornsilk
+            //highlighting.GetNamedColor("TrueFalse").Foreground = new SimpleHighlightingBrush(Color.FromRgb(100, 149, 237)); // CornflowerBlue
+            //highlighting.GetNamedColor("Keywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("ValueTypeKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("SemanticKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("NamespaceKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("ReferenceTypeKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("ThisOrBaseReference").Foreground = new SimpleHighlightingBrush(Color.FromRgb(32, 178, 170)); // LightSeaGreen
+            //highlighting.GetNamedColor("NullOrValueKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("GotoKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("ContextKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("ExceptionKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("CheckedKeyword").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("UnsafeKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("OperatorKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
+            //highlighting.GetNamedColor("SemanticKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
 
             foreach (var color in highlighting.NamedHighlightingColors) {
                 color.FontWeight = null;
@@ -1692,17 +1766,20 @@ namespace VisualGGPK2
             var l = fi.Length;
             var editPath = Settings.Default;
             var dir = Path.GetDirectoryName(FilePath);
-            Process.Start(new ProcessStartInfo(dir + @"\PathOfExile_x64.exe") {
+            Process.Start(new ProcessStartInfo(dir + @"\PathOfExile_x64.exe")
+            {
                 WorkingDirectory = dir
             });
 
         loop:
             try
             {
-                var uiMessageBox = new Wpf.Ui.Controls.MessageBox {
-                    Width = 120, Height = 40,
+                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                {
+                    Width = 140,
+                    Height = 40,
                     Background = new SolidColorBrush(Color.FromRgb(0x1F, 0x24, 0x28)),
-                    Title = "game mode",
+                    Title = "game mode   ",
                     //Content = "Close this to enter in Edit Mode again!"
                 };
                 await uiMessageBox.ShowDialogAsync();
@@ -1735,7 +1812,7 @@ namespace VisualGGPK2
                     ggpkContainer.fileStream = File.Open(FilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
                     ggpkContainer.Reader = new BinaryReader(ggpkContainer.fileStream);
                     ggpkContainer.Writer = new BinaryWriter(ggpkContainer.fileStream);
-                }                
+                }
             }
             catch (IOException)
             {
@@ -1743,6 +1820,59 @@ namespace VisualGGPK2
                 goto loop;
             }
         }
+
+        //private async void AllowGameOpen_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ggpkContainer.fileStream.Close();
+        //    var fi = new FileInfo(FilePath);
+        //    var t = fi.LastWriteTimeUtc;
+        //    var l = fi.Length;
+        //loop:
+        //    try
+        //    {
+        //        var uiMessageBox = new Wpf.Ui.Controls.MessageBox {
+        //            Title = "Open Game",
+        //            Content = "Edit Mode is now closed, you can open the game!\nClose the game and click OK to enter in Edit Mode again!"
+        //        };
+        //        await uiMessageBox.ShowDialogAsync();
+
+        //        fi = new FileInfo(FilePath);
+        //        if (fi.LastWriteTimeUtc != t || fi.Length != l)
+        //        {
+        //            MessageBox.Show(this, "The Content.ggpk has been modified, Now it's going to be reloaded", "GGPK Changed", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+        //            Tree.Items.Clear();
+        //            TextViewContent.Text = "Loading . . .";
+        //            TextViewContent.Visibility = Visibility.Visible;
+        //            FilterButton.IsEnabled = false;
+        //            AllowGameOpen.IsEnabled = false;
+
+        //            // Initial GGPK
+        //            await Task.Run(() => ggpkContainer = new GGPKContainer(FilePath, BundleMode, SteamMode));
+
+        //            var root = CreateNode(ggpkContainer.rootDirectory);
+        //            Tree.Items.Add(root); // Initial TreeView
+        //            root.IsExpanded = true;
+
+        //            FilterButton.IsEnabled = true;
+        //            if (!SteamMode)
+        //                AllowGameOpen.IsEnabled = true;
+
+        //            TextViewContent.AppendText("\r\n Done!");
+        //        }
+        //        else
+        //        {
+        //            ggpkContainer.fileStream = File.Open(FilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+        //            ggpkContainer.Reader = new BinaryReader(ggpkContainer.fileStream);
+        //            ggpkContainer.Writer = new BinaryWriter(ggpkContainer.fileStream);
+        //        }                
+        //    }
+        //    catch (IOException)
+        //    {
+        //        MessageBox.Show(this, "Cannot access the file, make sure you have closed the game!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        goto loop;
+        //    }
+        //}
 
         public Task RestoreIndex()
         {
@@ -1784,6 +1914,16 @@ namespace VisualGGPK2
                 });
             });
         }
+
+        //private async void uiMessage(object sender)
+        //{
+        //    var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+        //    {
+        //        Title = "WPF UI Message Box",
+        //        Content = "Never gonna give you up, never gonna let you down..."
+        //    };
+        //    await uiMessageBox.ShowDialogAsync();
+        //}
 
         private void ImageView_MouseWheel(object sender, MouseWheelEventArgs e)
         {

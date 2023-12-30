@@ -4,10 +4,10 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Authors>aianlinb</Authors>
     <Copyright>Copyright © 2020-2023 aianlinb</Copyright>
-    <Version>1.8</Version>
+    <Version>1.9.4</Version>
     <OutputType>WinExe</OutputType>
     <UseWPF>true</UseWPF>
-    <UseWindowsForms>true</UseWindowsForms>
+    <UseWindowsForms>False</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -16,6 +16,7 @@
     <ApplicationIcon>Resources\visualggpk2.ico</ApplicationIcon>
     <StartupObject>VisualGGPK2.App</StartupObject>
     <ImplicitUsings>disable</ImplicitUsings>
+    <BaseOutputPath>bin\</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,9 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Assets\epic_logo.png" />
     <None Remove="Assets\silver_cube.png" />
-    <None Remove="Assets\tencent_logo.png" />
     <None Remove="epic_logo.png" />
     <None Remove="Resources\48apple_dir.ico" />
     <None Remove="Resources\48dark_dir.ico" />
@@ -36,6 +35,7 @@
     <None Remove="Resources\blue_dir.ico" />
     <None Remove="Resources\blue_file.ico" />
     <None Remove="Resources\dirblack.ico" />
+    <None Remove="Resources\epic_logo.png" />
     <None Remove="Resources\gray2_dir.ico" />
     <None Remove="Resources\gray3_dir.ico" />
     <None Remove="Resources\graymac_dir.ico" />
@@ -46,6 +46,7 @@
     <None Remove="Resources\v_black_dir.ico" />
     <None Remove="Resources\v_gray_dir.ico" />
     <None Remove="Resources\x_dir.ico" />
+    <None Remove="silver_cube.png" />
     <None Remove="tencent_logo.png" />
     <None Remove="visualggpk2.png" />
   </ItemGroup>
@@ -80,13 +81,16 @@
     <EmbeddedResource Include="Resources\v_black_dir.ico" />
     <EmbeddedResource Include="Resources\v_gray_dir.ico" />
     <EmbeddedResource Include="Resources\x_dir.ico" />
+    <Resource Include="Resources\epic_logo.png" />
+    <Resource Include="Resources\tencent_logo.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BrotliSharpLib" Version="0.3.3" />
     <PackageReference Include="FluentIcons.Common" Version="1.1.224" />
     <PackageReference Include="FluentIcons.WPF" Version="1.1.224" />
-    <PackageReference Include="WPF-UI" Version="3.0.0-preview.13" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+    <PackageReference Include="WPF-UI" Version="3.0.0-preview.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -104,15 +108,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\silver_cube.png" />
     <EmbeddedResource Include="Resources\C#.xaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Resource Include="Assets\epic_logo.png" />
-    <Resource Include="Assets\tencent_logo.png" />
-    <Resource Include="epic_logo.png" />
     <Resource Include="Resources\visualggpk2.png" />
-    <Resource Include="tencent_logo.png" />
-    <Resource Include="visualggpk2.png" />
   </ItemGroup>
 
   <ItemGroup>
