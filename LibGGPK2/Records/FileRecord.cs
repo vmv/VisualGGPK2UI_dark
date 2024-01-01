@@ -250,6 +250,7 @@ namespace LibGGPK2.Records
                 case ".sm": // Skin Mesh
                 case ".tgr":
                 case ".tgt":
+                case ".toy":
                 case ".trl": // Trails Effect
                 case ".tsi":
                 case ".tst":

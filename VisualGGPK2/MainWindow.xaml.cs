@@ -348,6 +348,8 @@ namespace VisualGGPK2
                 // Hide the ProgressRing after the loading operation is done
                 pRing.IsIndeterminate = false;
                 pRing.Visibility = Visibility.Hidden;
+                tooltip.Visibility = Visibility.Hidden;
+                copyright.Visibility = Visibility.Hidden;
             }
 
             return true;
@@ -385,6 +387,8 @@ namespace VisualGGPK2
             {
                 pRing.IsIndeterminate = false;
                 pRing.Visibility = Visibility.Hidden;
+                tooltip.Visibility = Visibility.Hidden;
+                copyright.Visibility = Visibility.Hidden;
             }
             return true;
         }
@@ -429,6 +433,8 @@ namespace VisualGGPK2
                 // Hide the ProgressRing after the loading operation is done
                 pRing.IsIndeterminate = false;
                 pRing.Visibility = Visibility.Hidden;
+                tooltip.Visibility = Visibility.Hidden;
+                copyright.Visibility = Visibility.Hidden;
             }
 
             return true;
@@ -474,6 +480,8 @@ namespace VisualGGPK2
                 // Hide the ProgressRing after the loading operation is done
                 pRing.IsIndeterminate = false;
                 pRing.Visibility = Visibility.Hidden;
+                tooltip.Visibility = Visibility.Hidden;
+                copyright.Visibility = Visibility.Hidden;
             }
 
             return true;
@@ -511,6 +519,8 @@ namespace VisualGGPK2
             {
                 pRing.IsIndeterminate = false;
                 pRing.Visibility = Visibility.Hidden;
+                tooltip.Visibility = Visibility.Hidden;
+                copyright.Visibility = Visibility.Hidden;
             }
             return true;
         }
