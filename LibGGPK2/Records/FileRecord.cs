@@ -238,7 +238,9 @@ namespace LibGGPK2.Records
                 case ".gft":
                 case ".gt": // Ground Types
                 case ".idl":
-                case ".idt":
+                case ".idt":                
+                case ".it":
+                case ".itc":
                 case ".json":
                 case ".mat": // Materials
                 case ".mtd":
@@ -262,6 +264,7 @@ namespace LibGGPK2.Records
                 case ".filter": // Item/loot Filter
                 case ".fx": // Shader
                 case ".hlsl": // Shader
+                case ".inc":
                 case ".mel": // Maya Embedded Language
                 case ".properties":
                 case ".slt":
