@@ -4,7 +4,7 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Authors>aianlinb</Authors>
     <Copyright>Copyright © 2020-2023 aianlinb</Copyright>
-    <Version>1.9.4</Version>
+    <Version>1.9.6</Version>
     <OutputType>WinExe</OutputType>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>False</UseWindowsForms>
@@ -87,9 +87,9 @@
 
   <ItemGroup>
     <PackageReference Include="BrotliSharpLib" Version="0.3.3" />
-    <PackageReference Include="FluentIcons.Common" Version="1.1.224" />
-    <PackageReference Include="FluentIcons.WPF" Version="1.1.224" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+    <PackageReference Include="FluentIcons.Common" Version="1.1.225" />
+    <PackageReference Include="FluentIcons.WPF" Version="1.1.225" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
     <PackageReference Include="WPF-UI" Version="3.0.0-preview.6" />
   </ItemGroup>
 

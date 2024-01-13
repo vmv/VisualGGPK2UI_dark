@@ -34,6 +34,7 @@ using System.Windows;
 using System;
 using TreeViewItem = Wpf.Ui.Controls.TreeViewItem;
 using System.Diagnostics;
+using ICSharpCode.AvalonEdit.Rendering;
 
 namespace VisualGGPK2
 {
@@ -1583,53 +1584,33 @@ namespace VisualGGPK2
             e.Handled = true;
         }
 
-        private async void AllowGameOpen_Click(object sender, RoutedEventArgs e)
+        private void AllowGameOpen_Click(object sender, RoutedEventArgs e)
         {
             ggpkContainer.fileStream.Close();
-            var fi = new FileInfo(FilePath);
+            FileInfo fi = new(FilePath);
             var t = fi.LastWriteTimeUtc;
             var l = fi.Length;
-            var dir = Path.GetDirectoryName(FilePath);
+            string dir = Path.GetDirectoryName(FilePath);
             Process.Start(new ProcessStartInfo(dir + @"\PathOfExile_x64.exe")
             {
                 WorkingDirectory = dir
             });
 
+            bool working = true;
+
         loop:
             try
             {
-                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
-                {
-                    Width = 140,
-                    Height = 40,
-                    Background = new SolidColorBrush(Color.FromRgb(0x1F, 0x24, 0x28)),
-                    Title = "game mode   ",
-                    //Content = "Close this to enter in Edit Mode again!"
-                };
-                await uiMessageBox.ShowDialogAsync();
+                if (!working) return;
+                Thread.Sleep(1000);
 
                 fi = new FileInfo(FilePath);
                 if (fi.LastWriteTimeUtc != t || fi.Length != l)
                 {
-                    //MessageBox.Show(this, "The Content.ggpk has been modified, Now it's going to be reloaded", "GGPK Changed", MessageBoxButton.OK, MessageBoxImage.Warning);
-
                     Tree.Items.Clear();
-                    //TextViewContent.Text = "Loading . . .";
                     TextViewContent.Visibility = Visibility.Visible;
                     FilterButton.IsEnabled = false;
                     AllowGameOpen.IsEnabled = false;
-
-                    // Initial GGPK
-                    await Task.Run(() => ggpkContainer = new GGPKContainer(FilePath, BundleMode, SteamMode));
-
-                    var root = CreateNode(ggpkContainer.rootDirectory);
-                    Tree.Items.Add(root); // Initial TreeView
-                    root.IsExpanded = true;
-
-                    FilterButton.IsEnabled = true;
-                    if (!SteamMode) AllowGameOpen.IsEnabled = true;
-
-                    TextViewContent.AppendText("\r\n Done!");
                 }
                 else
                 {
@@ -1640,10 +1621,71 @@ namespace VisualGGPK2
             }
             catch (IOException)
             {
-                MessageBox.Show(this, "Close the game first!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 goto loop;
             }
         }
+
+        //private async void AllowGameOpen_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ggpkContainer.fileStream.Close();
+        //    var fi = new FileInfo(FilePath);
+        //    var t = fi.LastWriteTimeUtc;
+        //    var l = fi.Length;
+        //    var dir = Path.GetDirectoryName(FilePath);
+        //    Process.Start(new ProcessStartInfo(dir + @"\PathOfExile_x64.exe")
+        //    {
+        //        WorkingDirectory = dir
+        //    });
+
+        //loop:
+        //    try
+        //    {
+        //        var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+        //        {
+        //            Width = 140,
+        //            Height = 40,
+        //            Background = new SolidColorBrush(Color.FromRgb(0x1F, 0x24, 0x28)),
+        //            Title = "game mode   ",
+        //            //Content = "Close this to enter in Edit Mode again!"
+        //        };
+        //        await uiMessageBox.ShowDialogAsync();
+
+        //        fi = new FileInfo(FilePath);
+        //        if (fi.LastWriteTimeUtc != t || fi.Length != l)
+        //        {
+        //            //MessageBox.Show(this, "The Content.ggpk has been modified, Now it's going to be reloaded", "GGPK Changed", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+        //            Tree.Items.Clear();
+        //            //TextViewContent.Text = "Loading . . .";
+        //            TextViewContent.Visibility = Visibility.Visible;
+        //            FilterButton.IsEnabled = false;
+        //            AllowGameOpen.IsEnabled = false;
+
+        //            // Initial GGPK
+        //            await Task.Run(() => ggpkContainer = new GGPKContainer(FilePath, BundleMode, SteamMode));
+
+        //            var root = CreateNode(ggpkContainer.rootDirectory);
+        //            Tree.Items.Add(root); // Initial TreeView
+        //            root.IsExpanded = true;
+
+        //            FilterButton.IsEnabled = true;
+        //            if (!SteamMode) AllowGameOpen.IsEnabled = true;
+
+        //            TextViewContent.AppendText("\r\n Done!");
+        //        }
+        //        else
+        //        {
+        //            ggpkContainer.fileStream = File.Open(FilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+        //            ggpkContainer.Reader = new BinaryReader(ggpkContainer.fileStream);
+        //            ggpkContainer.Writer = new BinaryWriter(ggpkContainer.fileStream);
+        //        }
+        //    }
+        //    catch (IOException)
+        //    {
+        //        MessageBox.Show(this, "Close the game first!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        goto loop;
+        //    }
+        //}
 
         public Task RestoreIndex()
         {

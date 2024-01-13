@@ -1147,7 +1147,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    BorderThickness="0"
+                    BorderBrush="Black"
+                    BorderThickness="1"
                     Click="International_Click"
                     Content="O"
                     FontSize="20"
@@ -1162,7 +1163,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    BorderThickness="0"
+                    BorderBrush="Black"
+                    BorderThickness="1"
                     Click="Steam_Click"
                     Content="S"
                     FontSize="20"
@@ -1176,7 +1178,8 @@
                     Padding="0"
                     HorizontalAlignment="Center"
                     Background="Transparent"
-                    BorderThickness="0"
+                    BorderBrush="Black"
+                    BorderThickness="1"
                     Click="Garena_Click"
                     Content="G"
                     FontSize="20"
@@ -1190,7 +1193,8 @@
                     Padding="0"
                     HorizontalAlignment="Center"
                     Background="Transparent"
-                    BorderThickness="0"
+                    BorderBrush="Black"
+                    BorderThickness="1"
                     Click="Tencent_Click"
                     Content="T"
                     FontSize="20"
@@ -1205,7 +1209,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="Transparent"
-                    BorderThickness="0"
+                    BorderBrush="Black"
+                    BorderThickness="1"
                     Click="Steam_Click"
                     Content="E"
                     FontSize="20"
@@ -1252,7 +1257,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom">
                     <Run Foreground="DarkGray">
-                        v1.9.5
+                        v1.9.6
                     </Run>
                 </ui:TextBlock>
                 <ui:Image
