@@ -33,7 +33,6 @@ using System.Windows.Media;
 using System.Windows;
 using System;
 using TreeViewItem = Wpf.Ui.Controls.TreeViewItem;
-using VisualGGPK2.Properties;
 using System.Diagnostics;
 
 namespace VisualGGPK2
@@ -53,12 +52,14 @@ namespace VisualGGPK2
         protected string FilePath;
         internal static byte SelectedVersion;
         private string filterText = "";
-        private static readonly Settings _settings = Settings.Default;
-        //public string highlighting { get; set; }
-        //public readonly string csharp = (@"E:\eProjects\VisualGGPK2UI - dark - Copy\VisualGGPK2\Resources\CSharp-Mode.xshd");
-        //private readonly string syntax_colors = Application.Current.StartupUri + @"\C#.xaml";
+        private const int SettingsVersion = 1;
+        private readonly string bin_path = AppDomain.CurrentDomain.BaseDirectory + @"\visual.bin";
+        private string officialPath = Directory.Exists(@"C:\Program Files (x86)\Grinding Gear Games\Path of Exile") ? @"C:\Program Files (x86)\Grinding Gear Games\Path of Exile" : string.Empty;
+        private string steamPath = GetSteamInstallPath();
+        private string epicPath = Directory.Exists(@"C:\Program Files\Epic Games\PathOfExile\Bundles2") ? @"C:\Program Files\Epic Games\PathOfExile\Bundles2" : string.Empty;
+        private string garenaPath = Directory.Exists(@"C:\Program Files (x86)\Garena\Games\32808") ? @"C:\Program Files (x86)\Garena\Games\32808" : string.Empty;
+        private string tencentPath = string.Empty;
         private readonly string syntax_colors_CSharp = Path.Combine(Environment.CurrentDirectory, "C#.xaml");
-        //private readonly string syntax_colors_CSharp = Path.Combine(Environment.CurrentDirectory, "C#.json");
 
         public MainWindow()
         {
@@ -105,81 +106,6 @@ namespace VisualGGPK2
                 }
             }
 
-            // Load color definitions from the JSON file
-            //string jsonFilePath = "syntax_colors_CSharp"; // Provide the actual path
-            //if (File.Exists(jsonFilePath))
-            //{
-            //    string json = File.ReadAllText(jsonFilePath);
-            //    var colorDefinitions = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
-
-            //    foreach (var colorDefinition in colorDefinitions)
-            //    {
-            //        var namedColor = highlighting.GetNamedColor(colorDefinition.Key);
-            //        if (namedColor != null)
-            //        {
-            //            namedColor.Foreground = new SimpleHighlightingBrush(ColorConverter.ConvertFromString(colorDefinition.Value));
-            //        }
-            //    }
-            //}
-
-            // Colors for Light Theme syntax C#
-            //highlighting.GetNamedColor("StringInterpolation").Foreground = new SimpleHighlightingBrush(Colors.Black);
-            //highlighting.GetNamedColor("Punctuation").Foreground = new SimpleHighlightingBrush(Colors.Black);
-            //highlighting.GetNamedColor("NumberLiteral").Foreground = new SimpleHighlightingBrush(Colors.Black);
-            //highlighting.GetNamedColor("Comment").Foreground = new SimpleHighlightingBrush(Colors.ForestGreen);
-            //highlighting.GetNamedColor("MethodCall").Foreground = new SimpleHighlightingBrush(Colors.DarkGoldenrod);
-            //highlighting.GetNamedColor("GetSetAddRemove").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("Visibility").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("ParameterModifiers").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("Modifiers").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("String").Foreground = new SimpleHighlightingBrush(Colors.Brown);
-            //highlighting.GetNamedColor("Char").Foreground = new SimpleHighlightingBrush(Colors.Red);
-            //highlighting.GetNamedColor("Preprocessor").Foreground = new SimpleHighlightingBrush(Colors.DarkGray);
-            //highlighting.GetNamedColor("TrueFalse").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("Keywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("ValueTypeKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("SemanticKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("NamespaceKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("ReferenceTypeKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("ThisOrBaseReference").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("NullOrValueKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("GotoKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("ContextKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("ExceptionKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("CheckedKeyword").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("UnsafeKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("OperatorKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-            //highlighting.GetNamedColor("SemanticKeywords").Foreground = new SimpleHighlightingBrush(Colors.Blue);
-
-            // Colors for Dark Theme syntax C#
-            //highlighting.GetNamedColor("StringInterpolation").Foreground = new SimpleHighlightingBrush(Color.FromRgb(173, 219, 103)); // Light Green
-            //highlighting.GetNamedColor("Punctuation").Foreground = new SimpleHighlightingBrush(Color.FromRgb(201, 209, 217)); // ...
-            //highlighting.GetNamedColor("NumberLiteral").Foreground = new SimpleHighlightingBrush(Color.FromRgb(247, 140, 108)); // Light Red
-            //highlighting.GetNamedColor("Comment").Foreground = new SimpleHighlightingBrush(Color.FromRgb(106, 153, 85)); // Dark Green
-            //highlighting.GetNamedColor("MethodCall").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("GetSetAddRemove").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("Visibility").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("ParameterModifiers").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("Modifiers").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("String").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("Char").Foreground = new SimpleHighlightingBrush(Color.FromRgb(249, 38, 114)); // Bright Pink
-            //highlighting.GetNamedColor("Preprocessor").Foreground = new SimpleHighlightingBrush(Color.FromRgb(201, 209, 217)); // Cornsilk
-            //highlighting.GetNamedColor("TrueFalse").Foreground = new SimpleHighlightingBrush(Color.FromRgb(100, 149, 237)); // CornflowerBlue
-            //highlighting.GetNamedColor("Keywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("ValueTypeKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("SemanticKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("NamespaceKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("ReferenceTypeKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("ThisOrBaseReference").Foreground = new SimpleHighlightingBrush(Color.FromRgb(32, 178, 170)); // LightSeaGreen
-            //highlighting.GetNamedColor("NullOrValueKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("GotoKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("ContextKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("ExceptionKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("CheckedKeyword").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("UnsafeKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("OperatorKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-            //highlighting.GetNamedColor("SemanticKeywords").Foreground = new SimpleHighlightingBrush(Color.FromRgb(135, 206, 250)); // Light Sky Blue
-
             foreach (var color in highlighting.NamedHighlightingColors) {
                 color.FontWeight = null;
             }
@@ -187,139 +113,132 @@ namespace VisualGGPK2
             TextViewContent.SyntaxHighlighting = highlighting;
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version!;
-            var versionSuffix = currentVersion.Revision == 0
-                ? $" (v{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build})"
-                : $" (v{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build}.{currentVersion.Revision})";
+        //private async void OnLoaded(object sender, RoutedEventArgs e)
+        //{
+        //    var currentVersion = Assembly.GetExecutingAssembly().GetName().Version!;
+        //    var versionSuffix = currentVersion.Revision == 0
+        //        ? $" (v{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build})"
+        //        : $" (v{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build}.{currentVersion.Revision})";
 
-            Title += versionSuffix;
-            if (SteamMode) Title += " (SteamMode)";
-            if (BundleMode) Title += " (BundleMode)";
+        //    Title += versionSuffix;
+        //    if (SteamMode) Title += " (SteamMode)";
+        //    if (BundleMode) Title += " (BundleMode)";
 
-            // GGPK Selection
-            if (FilePath == null)
-            {
-                var ofd = new OpenFileDialog
-                {
-                    DefaultExt = "ggpk",
-                    FileName = SteamMode ? "_.index.bin" : "Content.ggpk",
-                    Filter = SteamMode ? "Index Bundle File|*.index.bin" : "GGPK File|*.ggpk"
-                };
+        //    // GGPK Selection
+        //    if (FilePath == null)
+        //    {
+        //        var ofd = new OpenFileDialog
+        //        {
+        //            DefaultExt = "ggpk",
+        //            FileName = SteamMode ? "_.index.bin" : "Content.ggpk",
+        //            Filter = SteamMode ? "Index Bundle File|*.index.bin" : "GGPK File|*.ggpk"
+        //        };
 
-                var setting = Settings.Default;
-                if (string.IsNullOrEmpty(setting.GGPKPath))
-                {
-                    setting.Upgrade();
-                    setting.Save();
-                }
-                if (string.IsNullOrEmpty(setting.GGPKPath))
-                {
-                    if (Registry.CurrentUser.OpenSubKey(@"Software\GrindingGearGames\Path of Exile")?.GetValue("InstallLocation") is string path &&
-                        File.Exists(Path.Combine(path, "Content.ggpk")))
-                    {
-                        ofd.InitialDirectory = path.TrimEnd('\\');
-                    }
-                }
-                else if (File.Exists(Path.Combine(setting.GGPKPath, "Content.ggpk")))
-                {
-                    ofd.InitialDirectory = setting.GGPKPath;
-                }
+        //        var setting = Settings.Default;
+        //        if (string.IsNullOrEmpty(setting.GGPKPath))
+        //        {
+        //            setting.Upgrade();
+        //            setting.Save();
+        //        }
+        //        if (string.IsNullOrEmpty(setting.GGPKPath))
+        //        {
+        //            if (Registry.CurrentUser.OpenSubKey(@"Software\GrindingGearGames\Path of Exile")?.GetValue("InstallLocation") is string path &&
+        //                File.Exists(Path.Combine(path, "Content.ggpk")))
+        //            {
+        //                ofd.InitialDirectory = path.TrimEnd('\\');
+        //            }
+        //        }
+        //        else if (File.Exists(Path.Combine(setting.GGPKPath, "Content.ggpk")))
+        //        {
+        //            ofd.InitialDirectory = setting.GGPKPath;
+        //        }
 
-                if (ofd.ShowDialog() != true)
-                    return;
+        //        if (ofd.ShowDialog() != true)
+        //            return;
 
-                setting.GGPKPath = Path.GetDirectoryName(FilePath = ofd.FileName);
-                setting.Save();
-            }
+        //        setting.GGPKPath = Path.GetDirectoryName(FilePath = ofd.FileName);
+        //        setting.Save();
+        //    }
 
-            pRing.Visibility = Visibility.Visible;
+        //    pRing.Visibility = Visibility.Visible;
 
-            try
-            {
-                pRing.IsIndeterminate = true;
+        //    try
+        //    {
+        //        pRing.IsIndeterminate = true;
 
-                // Initial GGPK
-                await Task.Run(() => ggpkContainer = new GGPKContainer(FilePath, BundleMode, SteamMode));
+        //        // Initial GGPK
+        //        await Task.Run(() => ggpkContainer = new GGPKContainer(FilePath, BundleMode, SteamMode));
 
-                // Initial ContextMenu
-                var mi = new MenuItem { Header = "Export" };
-                mi.Click += OnExportClicked;
-                TreeMenu.Items.Add(mi);
-                mi = new MenuItem { Header = "Replace" };
-                mi.Click += OnReplaceClicked;
-                TreeMenu.Items.Add(mi);
-                mi = new MenuItem { Header = "Recovery" };
-                mi.Click += OnRecoveryClicked;
-                TreeMenu.Items.Add(mi);
-                mi = new MenuItem { Header = "Convert dds to png" };
-                mi.Click += OnConvertPngClicked;
-                TreeMenu.Items.Add(mi);
-                mi = new MenuItem { Header = "Write png into dds" };
-                mi.Click += OnWriteImageClicked;
-                TreeMenu.Items.Add(mi);
+        //        // Initial ContextMenu
+        //        var mi = new MenuItem { Header = "Export" };
+        //        mi.Click += OnExportClicked;
+        //        TreeMenu.Items.Add(mi);
+        //        mi = new MenuItem { Header = "Replace" };
+        //        mi.Click += OnReplaceClicked;
+        //        TreeMenu.Items.Add(mi);
+        //        mi = new MenuItem { Header = "Recovery" };
+        //        mi.Click += OnRecoveryClicked;
+        //        TreeMenu.Items.Add(mi);
+        //        mi = new MenuItem { Header = "Convert dds to png" };
+        //        mi.Click += OnConvertPngClicked;
+        //        TreeMenu.Items.Add(mi);
+        //        mi = new MenuItem { Header = "Write png into dds" };
+        //        mi.Click += OnWriteImageClicked;
+        //        TreeMenu.Items.Add(mi);
 
-                var imageMenu = new ContextMenu();
-                mi = new MenuItem { Header = "Save as png" };
-                mi.Click += OnSavePngClicked;
-                imageMenu.Items.Add(mi);
-                mi = new MenuItem { Header = "Write png into dds" };
-                mi.Click += OnWriteImageClicked;
-                imageMenu.Items.Add(mi);
-                ImageView.ContextMenu = imageMenu;
+        //        var imageMenu = new ContextMenu();
+        //        mi = new MenuItem { Header = "Save as png" };
+        //        mi.Click += OnSavePngClicked;
+        //        imageMenu.Items.Add(mi);
+        //        mi = new MenuItem { Header = "Write png into dds" };
+        //        mi.Click += OnWriteImageClicked;
+        //        imageMenu.Items.Add(mi);
+        //        ImageView.ContextMenu = imageMenu;
 
-                var root = CreateNode(ggpkContainer.rootDirectory);
-                Tree.Items.Add(root);
-                root.IsExpanded = true;
+        //        var root = CreateNode(ggpkContainer.rootDirectory);
+        //        Tree.Items.Add(root);
+        //        root.IsExpanded = true;
 
-                FilterButton.IsEnabled = true;
-                if (!SteamMode) AllowGameOpen.IsEnabled = true;
+        //        FilterButton.IsEnabled = true;
+        //        if (!SteamMode) AllowGameOpen.IsEnabled = true;
 
-                // Mark the free spaces in data section of dat files
-                DatReferenceDataTable.CellStyle = new Style(typeof(DataGridCell));
-                DatReferenceDataTable.CellStyle.Setters.Add(new EventSetter(LoadedEvent, new RoutedEventHandler(OnCellLoaded)));
+        //        // Mark the free spaces in data section of dat files
+        //        DatReferenceDataTable.CellStyle = new Style(typeof(DataGridCell));
+        //        DatReferenceDataTable.CellStyle.Setters.Add(new EventSetter(LoadedEvent, new RoutedEventHandler(OnCellLoaded)));
 
-                // Make changes to DatContainer after editing DatTable
-                DatTable.CellEditEnding += OnDatTableCellEdit;
-                // Make changes to DatContainer after editing DatReferenceDataTable
-                DatReferenceDataTable.CellEditEnding += OnDatReferenceDataTableCellEdit;
+        //        // Make changes to DatContainer after editing DatTable
+        //        DatTable.CellEditEnding += OnDatTableCellEdit;
+        //        // Make changes to DatContainer after editing DatReferenceDataTable
+        //        DatReferenceDataTable.CellEditEnding += OnDatReferenceDataTableCellEdit;
 
-                TextViewContent.AppendText("\r\n Done!");
-            }
-            finally
-            {
-                pRing.IsIndeterminate = false;
-                pRing.Visibility = Visibility.Hidden;
-                tooltip.Visibility = Visibility.Hidden;
-                copyright.Visibility = Visibility.Hidden;
-            }
-        }
-
-        //private static void ContextMenuItem_Click(object sender, RoutedEventArgs e) {
-        //    if (sender is not MenuItem menuItem) return;
-        //    var header = menuItem.Header.ToString();
-        //    switch (header) {
-        //        case "Export": break;
-        //        case "Replace": break;
-        //        case "Recovery": break;
-        //        case "Convert dds to png": break;
-        //        case "Write png into dds": break;
+        //        TextViewContent.AppendText("\r\n Done!");
+        //    }
+        //    finally
+        //    {
+        //        pRing.IsIndeterminate = false;
+        //        pRing.Visibility = Visibility.Hidden;
+        //        tooltip.Visibility = Visibility.Hidden;
+        //        copyright.Visibility = Visibility.Hidden;
         //    }
         //}
 
-        private async Task<bool> OfficialLoaded(bool bundleMode = false)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (FilePath != null) return true;
-            const string officialPath = @"D:\GAMES\Official\Path of Exile";
+            LoadSettings();
+            pRing.Visibility = Visibility.Visible;
+        }
+
+        private async Task<bool> OfficialLoaded()
+        {
             var ofd = new OpenFileDialog
             {
                 DefaultExt = "ggpk",
                 FileName = "Content.ggpk",
                 Filter = "GGPK File|*.ggpk",
-                InitialDirectory = _settings.officialPath == "" ? officialPath : _settings.officialPath
+                InitialDirectory = officialPath
             };
             if (ofd.ShowDialog() != true) return false;
+
 
             // Show the ProgressRing before starting the loading operation
             pRing.IsIndeterminate = true;
@@ -327,11 +246,11 @@ namespace VisualGGPK2
 
             try
             {
-                _settings.officialPath = Directory.GetParent(ofd.FileName)?.FullName;
-                _settings.Save();
-
                 // Load the GGPKContainer asynchronously
-                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, bundleMode));
+                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, false));
+                // Save FilePath
+                FilePath = ofd.FileName;
+                Dispatcher.Invoke(SaveSettings);
 
                 // Populate the TreeView
                 Tree.Items.Clear();
@@ -357,113 +276,26 @@ namespace VisualGGPK2
 
         private async Task<bool> SteamLoaded()
         {
-            if (FilePath != null) return true;
-            var steamPath = GetSteamInstallPath() + @"\steamapps\common\Path of Exile\Bundles2";
             var ofd = new OpenFileDialog
             {
                 DefaultExt = "bin",
                 FileName = "_.index.bin",
                 Filter = "bin file|*.bin",
-                InitialDirectory = _settings.steamPath == "" ? steamPath : _settings.steamPath
+                InitialDirectory = steamPath
             };
             if (ofd.ShowDialog() != true) return false;
+
+            // Show the ProgressRing before starting the loading operation
             pRing.IsIndeterminate = true;
             pRing.Visibility = Visibility.Visible;
+
             try
             {
-                _settings.steamPath = Directory.GetParent(ofd.FileName)?.FullName;
-                _settings.Save();
+                // Load the GGPKContainer asynchronously
                 ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, true));
-                Tree.Items.Clear();
-                var root = CreateNode(ggpkContainer.rootDirectory);
-                Tree.Items.Add(root);
-                root.IsExpanded = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                pRing.IsIndeterminate = false;
-                pRing.Visibility = Visibility.Hidden;
-                tooltip.Visibility = Visibility.Hidden;
-                copyright.Visibility = Visibility.Hidden;
-            }
-            return true;
-        }
-
-        private async Task<bool> GarenaLoaded()
-        {
-            if (FilePath != null) return true;
-            const string garenaPath = @"C:\Garena\Games\32808";
-            var ofd = new OpenFileDialog
-            {
-                DefaultExt = "ggpk",
-                FileName = "Content.ggpk",
-                Filter = "GGPK File|*.ggpk",
-                InitialDirectory = _settings.garenaPath == "" ? garenaPath : _settings.garenaPath
-            };
-            if (ofd.ShowDialog() != true) return false;
-
-            // Show the ProgressRing before starting the loading operation
-            pRing.IsIndeterminate = true;
-            pRing.Visibility = Visibility.Visible;
-
-            try
-            {
-                _settings.garenaPath = ofd.FileName;
-                _settings.Save();
-
-                // Load the GGPKContainer asynchronously
-                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
-
-                // Populate the TreeView
-                Tree.Items.Clear();
-                var root = CreateNode(ggpkContainer.rootDirectory);
-                Tree.Items.Add(root);
-                root.IsExpanded = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                // Hide the ProgressRing after the loading operation is done
-                pRing.IsIndeterminate = false;
-                pRing.Visibility = Visibility.Hidden;
-                tooltip.Visibility = Visibility.Hidden;
-                copyright.Visibility = Visibility.Hidden;
-            }
-
-            return true;
-        }
-
-        private async Task<bool> TencentLoaded()
-        {
-            if (FilePath != null) return true;
-            const string tencentPath = @"C:\Tencent\WeGameApps\Path of Exile\POE\";
-            var ofd = new OpenFileDialog
-            {
-                DefaultExt = "ggpk",
-                FileName = "Content.ggpk",
-                Filter = "GGPK File|*.ggpk",
-                InitialDirectory = _settings.tencentPath == "" ? tencentPath : _settings.tencentPath
-            };
-            if (ofd.ShowDialog() != true) return false;
-
-            // Show the ProgressRing before starting the loading operation
-            pRing.IsIndeterminate = true;
-            pRing.Visibility = Visibility.Visible;
-
-            try
-            {
-                _settings.tencentPath = ofd.FileName;
-                _settings.Save();
-
-                // Load the GGPKContainer asynchronously
-                ggpkContainer = await Task.Run(() => new GGPKContainer(_settings.tencentPath));
+                // Save FilePath
+                FilePath = ofd.FileName;
+                Dispatcher.Invoke(SaveSettings);
 
                 // Populate the TreeView
                 Tree.Items.Clear();
@@ -489,23 +321,28 @@ namespace VisualGGPK2
 
         private async Task<bool> EpicLoaded()
         {
-            if (FilePath != null) return true;
-            const string epicPath = @"C:\Program Files\Epic Games\PathOfExile\Bundles2";
             var ofd = new OpenFileDialog
             {
                 DefaultExt = "bin",
                 FileName = "_.index.bin",
                 Filter = "bin file|*.bin",
-                InitialDirectory = _settings.epicPath == "" ? epicPath : _settings.epicPath
+                InitialDirectory = epicPath
             };
             if (ofd.ShowDialog() != true) return false;
+
+            // Show the ProgressRing before starting the loading operation
             pRing.IsIndeterminate = true;
             pRing.Visibility = Visibility.Visible;
+
             try
             {
-                _settings.epicPath = Directory.GetParent(ofd.FileName)?.FullName;
-                _settings.Save();
-                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, true));
+                // Load the GGPKContainer asynchronously
+                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
+                // Save FilePath
+                FilePath = ofd.FileName;
+                Dispatcher.Invoke(SaveSettings);
+
+                // Populate the TreeView
                 Tree.Items.Clear();
                 var root = CreateNode(ggpkContainer.rootDirectory);
                 Tree.Items.Add(root);
@@ -517,25 +354,157 @@ namespace VisualGGPK2
             }
             finally
             {
+                // Hide the ProgressRing after the loading operation is done
                 pRing.IsIndeterminate = false;
                 pRing.Visibility = Visibility.Hidden;
                 tooltip.Visibility = Visibility.Hidden;
                 copyright.Visibility = Visibility.Hidden;
             }
+
+            return true;
+        }
+
+        private async Task<bool> GarenaLoaded()
+        {
+            var ofd = new OpenFileDialog
+            {
+                DefaultExt = "ggpk",
+                FileName = "Content.ggpk",
+                Filter = "GGPK File|*.ggpk",
+                InitialDirectory = garenaPath
+            };
+            if (ofd.ShowDialog() != true) return false;
+
+            // Show the ProgressRing before starting the loading operation
+            pRing.IsIndeterminate = true;
+            pRing.Visibility = Visibility.Visible;
+
+            try
+            {
+                // Load the GGPKContainer asynchronously
+                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
+                // Save FilePath
+                FilePath = ofd.FileName;
+                Dispatcher.Invoke(SaveSettings);
+
+                // Populate the TreeView
+                Tree.Items.Clear();
+                var root = CreateNode(ggpkContainer.rootDirectory);
+                Tree.Items.Add(root);
+                root.IsExpanded = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Hide the ProgressRing after the loading operation is done
+                pRing.IsIndeterminate = false;
+                pRing.Visibility = Visibility.Hidden;
+                tooltip.Visibility = Visibility.Hidden;
+                copyright.Visibility = Visibility.Hidden;
+            }
+
+            return true;
+        }
+
+        private async Task<bool> TencentLoaded()
+        {
+            var ofd = new OpenFileDialog
+            {
+                DefaultExt = "ggpk",
+                FileName = "Content.ggpk",
+                Filter = "GGPK File|*.ggpk",
+                InitialDirectory = tencentPath
+            };
+            if (ofd.ShowDialog() != true) return false;
+            // Show the ProgressRing before starting the loading operation
+            pRing.IsIndeterminate = true;
+            pRing.Visibility = Visibility.Visible;
+
+            try
+            {
+                // Load the GGPKContainer asynchronously
+                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
+                // Save FilePath
+                FilePath = ofd.FileName;
+                Dispatcher.Invoke(SaveSettings);
+
+                // Populate the TreeView
+                Tree.Items.Clear();
+                var root = CreateNode(ggpkContainer.rootDirectory);
+                Tree.Items.Add(root);
+                root.IsExpanded = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Hide the ProgressRing after the loading operation is done
+                pRing.IsIndeterminate = false;
+                pRing.Visibility = Visibility.Hidden;
+                tooltip.Visibility = Visibility.Hidden;
+                copyright.Visibility = Visibility.Hidden;
+            }
+
             return true;
         }
 
         private static string GetSteamInstallPath()
         {
-            //const string defaultPath = @"C:\Program Files (x86)\Steam";
-            //var installPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\Software\WOW6432Node\Valve\Steam", "InstallPath", defaultPath);
-            //return installPath ?? defaultPath;
             const string defaultPath = @"C:\Program Files (x86)\Steam";
-            var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
-            using var key = baseKey.OpenSubKey(@"Software\Valve\Steam");
-            if (key == null) return defaultPath;
-            var installPath = (string)key.GetValue("InstallPath");
-            return !string.IsNullOrEmpty(installPath) ? installPath : defaultPath;
+            var installPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\Software\Valve\Steam", "InstallPath", defaultPath);
+            return installPath ?? defaultPath;
+        }
+
+
+        private void SaveSettings()
+        {
+            try
+            {
+                using var bw = new BinaryWriter(File.Create(bin_path));
+
+                // String
+                bw.Write(officialPath);
+                bw.Write(steamPath);
+                bw.Write(epicPath);
+                bw.Write(garenaPath);
+                bw.Write(tencentPath);
+            }
+            catch (Exception ex)
+            {
+                // ignored
+#if DEBUG
+				Debug.WriteLine(ex.Message);
+#endif
+            }
+        }
+
+        private void LoadSettings()
+        {
+            try
+            {
+                if (!File.Exists(bin_path)) return;
+
+                using var br = new BinaryReader(File.OpenRead(bin_path));
+
+                // String
+                officialPath = br.ReadString();
+                steamPath = br.ReadString();
+                epicPath = br.ReadString();
+                garenaPath = br.ReadString();
+                tencentPath = br.ReadString();
+            }
+            catch (Exception ex)
+            {
+                // ignored
+#if DEBUG
+				Debug.WriteLine(ex.Message);
+#endif
+            }
         }
 
         /// <summary>
@@ -1774,7 +1743,6 @@ namespace VisualGGPK2
             var fi = new FileInfo(FilePath);
             var t = fi.LastWriteTimeUtc;
             var l = fi.Length;
-            var editPath = Settings.Default;
             var dir = Path.GetDirectoryName(FilePath);
             Process.Start(new ProcessStartInfo(dir + @"\PathOfExile_x64.exe")
             {

@@ -18,7 +18,7 @@
     Drop="OnDragDrop"
     FontFamily="Verdana"
     Foreground="{x:Null}"
-    Loaded="OnLoaded"
+    Loaded="Window_Loaded"
     ResizeMode="CanResize"
     Style="{DynamicResource FluentWindowStyle}"
     WindowStartupLocation="CenterScreen"
@@ -1252,7 +1252,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom">
                     <Run Foreground="DarkGray">
-                        v1.9.4
+                        v1.9.5
                     </Run>
                 </ui:TextBlock>
                 <ui:Image
