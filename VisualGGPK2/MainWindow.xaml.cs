@@ -1602,7 +1602,7 @@ namespace VisualGGPK2
             try
             {
                 if (!working) return;
-                Thread.Sleep(1000);
+                Task.Delay(1000).Wait();
 
                 fi = new FileInfo(FilePath);
                 if (fi.LastWriteTimeUtc != t || fi.Length != l)
