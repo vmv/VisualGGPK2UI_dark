@@ -113,115 +113,6 @@ namespace VisualGGPK2
             TextViewContent.SyntaxHighlighting = highlighting;
         }
 
-        //private async void OnLoaded(object sender, RoutedEventArgs e)
-        //{
-        //    var currentVersion = Assembly.GetExecutingAssembly().GetName().Version!;
-        //    var versionSuffix = currentVersion.Revision == 0
-        //        ? $" (v{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build})"
-        //        : $" (v{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build}.{currentVersion.Revision})";
-
-        //    Title += versionSuffix;
-        //    if (SteamMode) Title += " (SteamMode)";
-        //    if (BundleMode) Title += " (BundleMode)";
-
-        //    // GGPK Selection
-        //    if (FilePath == null)
-        //    {
-        //        var ofd = new OpenFileDialog
-        //        {
-        //            DefaultExt = "ggpk",
-        //            FileName = SteamMode ? "_.index.bin" : "Content.ggpk",
-        //            Filter = SteamMode ? "Index Bundle File|*.index.bin" : "GGPK File|*.ggpk"
-        //        };
-
-        //        var setting = Settings.Default;
-        //        if (string.IsNullOrEmpty(setting.GGPKPath))
-        //        {
-        //            setting.Upgrade();
-        //            setting.Save();
-        //        }
-        //        if (string.IsNullOrEmpty(setting.GGPKPath))
-        //        {
-        //            if (Registry.CurrentUser.OpenSubKey(@"Software\GrindingGearGames\Path of Exile")?.GetValue("InstallLocation") is string path &&
-        //                File.Exists(Path.Combine(path, "Content.ggpk")))
-        //            {
-        //                ofd.InitialDirectory = path.TrimEnd('\\');
-        //            }
-        //        }
-        //        else if (File.Exists(Path.Combine(setting.GGPKPath, "Content.ggpk")))
-        //        {
-        //            ofd.InitialDirectory = setting.GGPKPath;
-        //        }
-
-        //        if (ofd.ShowDialog() != true)
-        //            return;
-
-        //        setting.GGPKPath = Path.GetDirectoryName(FilePath = ofd.FileName);
-        //        setting.Save();
-        //    }
-
-        //    pRing.Visibility = Visibility.Visible;
-
-        //    try
-        //    {
-        //        pRing.IsIndeterminate = true;
-
-        //        // Initial GGPK
-        //        await Task.Run(() => ggpkContainer = new GGPKContainer(FilePath, BundleMode, SteamMode));
-
-        //        // Initial ContextMenu
-        //        var mi = new MenuItem { Header = "Export" };
-        //        mi.Click += OnExportClicked;
-        //        TreeMenu.Items.Add(mi);
-        //        mi = new MenuItem { Header = "Replace" };
-        //        mi.Click += OnReplaceClicked;
-        //        TreeMenu.Items.Add(mi);
-        //        mi = new MenuItem { Header = "Recovery" };
-        //        mi.Click += OnRecoveryClicked;
-        //        TreeMenu.Items.Add(mi);
-        //        mi = new MenuItem { Header = "Convert dds to png" };
-        //        mi.Click += OnConvertPngClicked;
-        //        TreeMenu.Items.Add(mi);
-        //        mi = new MenuItem { Header = "Write png into dds" };
-        //        mi.Click += OnWriteImageClicked;
-        //        TreeMenu.Items.Add(mi);
-
-        //        var imageMenu = new ContextMenu();
-        //        mi = new MenuItem { Header = "Save as png" };
-        //        mi.Click += OnSavePngClicked;
-        //        imageMenu.Items.Add(mi);
-        //        mi = new MenuItem { Header = "Write png into dds" };
-        //        mi.Click += OnWriteImageClicked;
-        //        imageMenu.Items.Add(mi);
-        //        ImageView.ContextMenu = imageMenu;
-
-        //        var root = CreateNode(ggpkContainer.rootDirectory);
-        //        Tree.Items.Add(root);
-        //        root.IsExpanded = true;
-
-        //        FilterButton.IsEnabled = true;
-        //        if (!SteamMode) AllowGameOpen.IsEnabled = true;
-
-        //        // Mark the free spaces in data section of dat files
-        //        DatReferenceDataTable.CellStyle = new Style(typeof(DataGridCell));
-        //        DatReferenceDataTable.CellStyle.Setters.Add(new EventSetter(LoadedEvent, new RoutedEventHandler(OnCellLoaded)));
-
-        //        // Make changes to DatContainer after editing DatTable
-        //        DatTable.CellEditEnding += OnDatTableCellEdit;
-        //        // Make changes to DatContainer after editing DatReferenceDataTable
-        //        DatReferenceDataTable.CellEditEnding += OnDatReferenceDataTableCellEdit;
-
-        //        TextViewContent.AppendText("\r\n Done!");
-        //    }
-        //    finally
-        //    {
-        //        pRing.IsIndeterminate = false;
-        //        pRing.Visibility = Visibility.Hidden;
-        //        tooltip.Visibility = Visibility.Hidden;
-        //        copyright.Visibility = Visibility.Hidden;
-        //    }
-        //}
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LoadSettings();
@@ -317,52 +208,7 @@ namespace VisualGGPK2
             }
 
             return true;
-        }
-
-        private async Task<bool> EpicLoaded()
-        {
-            var ofd = new OpenFileDialog
-            {
-                DefaultExt = "bin",
-                FileName = "_.index.bin",
-                Filter = "bin file|*.bin",
-                InitialDirectory = epicPath
-            };
-            if (ofd.ShowDialog() != true) return false;
-
-            // Show the ProgressRing before starting the loading operation
-            pRing.IsIndeterminate = true;
-            pRing.Visibility = Visibility.Visible;
-
-            try
-            {
-                // Load the GGPKContainer asynchronously
-                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
-                // Save FilePath
-                FilePath = ofd.FileName;
-                Dispatcher.Invoke(SaveSettings);
-
-                // Populate the TreeView
-                Tree.Items.Clear();
-                var root = CreateNode(ggpkContainer.rootDirectory);
-                Tree.Items.Add(root);
-                root.IsExpanded = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                // Hide the ProgressRing after the loading operation is done
-                pRing.IsIndeterminate = false;
-                pRing.Visibility = Visibility.Hidden;
-                tooltip.Visibility = Visibility.Hidden;
-                copyright.Visibility = Visibility.Hidden;
-            }
-
-            return true;
-        }
+        }        
 
         private async Task<bool> GarenaLoaded()
         {
@@ -1799,59 +1645,6 @@ namespace VisualGGPK2
             }
         }
 
-        //private async void AllowGameOpen_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ggpkContainer.fileStream.Close();
-        //    var fi = new FileInfo(FilePath);
-        //    var t = fi.LastWriteTimeUtc;
-        //    var l = fi.Length;
-        //loop:
-        //    try
-        //    {
-        //        var uiMessageBox = new Wpf.Ui.Controls.MessageBox {
-        //            Title = "Open Game",
-        //            Content = "Edit Mode is now closed, you can open the game!\nClose the game and click OK to enter in Edit Mode again!"
-        //        };
-        //        await uiMessageBox.ShowDialogAsync();
-
-        //        fi = new FileInfo(FilePath);
-        //        if (fi.LastWriteTimeUtc != t || fi.Length != l)
-        //        {
-        //            MessageBox.Show(this, "The Content.ggpk has been modified, Now it's going to be reloaded", "GGPK Changed", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-        //            Tree.Items.Clear();
-        //            TextViewContent.Text = "Loading . . .";
-        //            TextViewContent.Visibility = Visibility.Visible;
-        //            FilterButton.IsEnabled = false;
-        //            AllowGameOpen.IsEnabled = false;
-
-        //            // Initial GGPK
-        //            await Task.Run(() => ggpkContainer = new GGPKContainer(FilePath, BundleMode, SteamMode));
-
-        //            var root = CreateNode(ggpkContainer.rootDirectory);
-        //            Tree.Items.Add(root); // Initial TreeView
-        //            root.IsExpanded = true;
-
-        //            FilterButton.IsEnabled = true;
-        //            if (!SteamMode)
-        //                AllowGameOpen.IsEnabled = true;
-
-        //            TextViewContent.AppendText("\r\n Done!");
-        //        }
-        //        else
-        //        {
-        //            ggpkContainer.fileStream = File.Open(FilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
-        //            ggpkContainer.Reader = new BinaryReader(ggpkContainer.fileStream);
-        //            ggpkContainer.Writer = new BinaryWriter(ggpkContainer.fileStream);
-        //        }                
-        //    }
-        //    catch (IOException)
-        //    {
-        //        MessageBox.Show(this, "Cannot access the file, make sure you have closed the game!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        goto loop;
-        //    }
-        //}
-
         public Task RestoreIndex()
         {
             try
@@ -1892,16 +1685,6 @@ namespace VisualGGPK2
                 });
             });
         }
-
-        //private async void uiMessage(object sender)
-        //{
-        //    var uiMessageBox = new Wpf.Ui.Controls.MessageBox
-        //    {
-        //        Title = "WPF UI Message Box",
-        //        Content = "Never gonna give you up, never gonna let you down..."
-        //    };
-        //    await uiMessageBox.ShowDialogAsync();
-        //}
 
         private void ImageView_MouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -1993,13 +1776,7 @@ namespace VisualGGPK2
             catch { //...
             }
         }
-
-        private async void Epic_Click(object sender, RoutedEventArgs e)
-        {
-            try { if (!await EpicLoaded()) return; }
-            catch { //...
-            }
-        }
+        
         #endregion wpf.ui
 
         //private void TextViewContent_KeyDown(object sender, KeyEventArgs e)

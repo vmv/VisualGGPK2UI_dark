@@ -1206,7 +1206,7 @@
                     VerticalAlignment="Center"
                     Background="Transparent"
                     BorderThickness="0"
-                    Click="Epic_Click"
+                    Click="Steam_Click"
                     Content="E"
                     FontSize="20"
                     Foreground="LightGray"
