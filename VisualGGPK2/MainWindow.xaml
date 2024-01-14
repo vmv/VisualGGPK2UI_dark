@@ -1387,7 +1387,7 @@
                 FontSize="12"
                 Opacity="0.8">
                 <Run FontWeight="Black" Foreground="Gray">
-                    copyright © 2023 aianlinb
+                    copyright © 2020 - 2024 aianlinb
                 </Run>
             </ui:TextBlock>
 

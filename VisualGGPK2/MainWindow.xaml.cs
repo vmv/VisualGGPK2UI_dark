@@ -7,7 +7,7 @@ using LibBundle;
 using LibDat2;
 using LibGGPK2.Records;
 using LibGGPK2;
-//using MenuItem = Wpf.Ui.Controls.MenuItem;
+using MenuItem = Wpf.Ui.Controls.MenuItem;
 using Microsoft.Win32;
 using PixelFormat = System.Windows.Media.PixelFormat;
 using System.Collections.Generic;
@@ -112,6 +112,32 @@ namespace VisualGGPK2
             }
             TextViewContent.SyntaxHighlighting = null;
             TextViewContent.SyntaxHighlighting = highlighting;
+
+            // Initial ContextMenu
+            var mi = new MenuItem { Header = "Export" };
+            mi.Click += OnExportClicked;
+            TreeMenu.Items.Add(mi);
+            mi = new MenuItem { Header = "Replace" };
+            mi.Click += OnReplaceClicked;
+            TreeMenu.Items.Add(mi);
+            mi = new MenuItem { Header = "Recovery" };
+            mi.Click += OnRecoveryClicked;
+            TreeMenu.Items.Add(mi);
+            mi = new MenuItem { Header = "Convert dds to png" };
+            mi.Click += OnConvertPngClicked;
+            TreeMenu.Items.Add(mi);
+            mi = new MenuItem { Header = "Write png into dds" };
+            mi.Click += OnWriteImageClicked;
+            TreeMenu.Items.Add(mi);
+
+            var imageMenu = new ContextMenu();
+            mi = new MenuItem { Header = "Save as png" };
+            mi.Click += OnSavePngClicked;
+            imageMenu.Items.Add(mi);
+            mi = new MenuItem { Header = "Write png into dds" };
+            mi.Click += OnWriteImageClicked;
+            imageMenu.Items.Add(mi);
+            ImageView.ContextMenu = imageMenu;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
