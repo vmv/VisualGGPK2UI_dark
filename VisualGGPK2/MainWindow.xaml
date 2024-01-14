@@ -1185,7 +1185,7 @@
                     FontSize="20"
                     Foreground="LightGray"
                     ToolTipService.ToolTip="open Garena" />
-                <ui:Button
+                <!--<ui:Button
                     x:Name="Tencent"
                     Width="40"
                     Height="35"
@@ -1199,7 +1199,7 @@
                     Content="T"
                     FontSize="20"
                     Foreground="LightGray"
-                    ToolTipService.ToolTip="open Tencent" />
+                    ToolTipService.ToolTip="open Tencent" />-->
                 <ui:Button
                     x:Name="Epic"
                     Width="40"
@@ -1257,7 +1257,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom">
                     <Run Foreground="DarkGray">
-                        v1.9.5
+                        v1.9.7
                     </Run>
                 </ui:TextBlock>
                 <ui:Image
