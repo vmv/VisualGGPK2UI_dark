@@ -1131,7 +1131,7 @@
                     <ic:SymbolIcon IsFilled="False" Symbol="DesktopCheckmark" />
                 </ui:Button>
                 <ui:TextBlock
-                    Margin="0,80,0,0"
+                    Margin="0,120,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
                     <Run FontWeight="Black" Foreground="#FF2E7ED4">
@@ -1217,7 +1217,7 @@
                     Foreground="LightGray"
                     ToolTipService.ToolTip="open Epic" />
                 <ui:TextBlock
-                    Margin="0,80,0,0"
+                    Margin="0,120,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
                     <Run
@@ -1257,7 +1257,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom">
                     <Run Foreground="DarkGray">
-                        v1.9.7
+                        v1.9.8
                     </Run>
                 </ui:TextBlock>
                 <ui:Image
