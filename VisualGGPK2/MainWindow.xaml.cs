@@ -52,7 +52,6 @@ namespace VisualGGPK2
         protected string FilePath;
         internal static byte SelectedVersion;
         private string filterText = "";
-        private const int SettingsVersion = 1;
         private readonly string bin_path = AppDomain.CurrentDomain.BaseDirectory + @"\visual.bin";
         private string officialPath = Directory.Exists(@"C:\Program Files (x86)\Grinding Gear Games\Path of Exile") ? @"C:\Program Files (x86)\Grinding Gear Games\Path of Exile" : string.Empty;
         private string steamPath = GetSteamInstallPath();
