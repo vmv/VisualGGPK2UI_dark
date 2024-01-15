@@ -1,40 +1,39 @@
-﻿using Color = System.Windows.Media.Color;
-using DirectXTexWrapper;
+﻿using DirectXTexWrapper;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Search;
-using LibBundle.Records;
 using LibBundle;
+using LibBundle.Records;
 using LibDat2;
-using LibGGPK2.Records;
 using LibGGPK2;
-using MenuItem = Wpf.Ui.Controls.MenuItem;
+using LibGGPK2.Records;
 using Microsoft.Win32;
-using PixelFormat = System.Windows.Media.PixelFormat;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing.Imaging;
+using System.Diagnostics;
 using System.Drawing;
-using System.IO.Compression;
+using System.Drawing.Imaging;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
-using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using System.Windows.Media;
-using System.Windows;
-using System;
+using System.Windows.Media.Imaging;
+using Color = System.Windows.Media.Color;
+using MenuItem = Wpf.Ui.Controls.MenuItem;
+using PixelFormat = System.Windows.Media.PixelFormat;
 using TreeViewItem = Wpf.Ui.Controls.TreeViewItem;
-using System.Diagnostics;
-using ICSharpCode.AvalonEdit.Rendering;
 
 namespace VisualGGPK2
 {
@@ -59,8 +58,10 @@ namespace VisualGGPK2
         private string steamPath = GetSteamInstallPath();
         private string epicPath = Directory.Exists(@"C:\Program Files\Epic Games\PathOfExile\Bundles2") ? @"C:\Program Files\Epic Games\PathOfExile\Bundles2" : string.Empty;
         private string garenaPath = Directory.Exists(@"C:\Program Files (x86)\Garena\Games\32808") ? @"C:\Program Files (x86)\Garena\Games\32808" : string.Empty;
-        private string tencentPath = string.Empty;
+
+        //private string tencentPath = string.Empty;
         private readonly string syntax_colors_CSharp = Path.Combine(Environment.CurrentDirectory, "C#.xaml");
+
 
         public MainWindow()
         {
@@ -88,6 +89,9 @@ namespace VisualGGPK2
                 return;
             }
             InitializeComponent();
+
+            LoadSettings();
+
             SearchPanel.Install(TextViewContent);
             TextViewContent.Options.AllowScrollBelowDocument = true;
             var highlighting = TextViewContent.SyntaxHighlighting;
@@ -107,7 +111,8 @@ namespace VisualGGPK2
                 }
             }
 
-            foreach (var color in highlighting.NamedHighlightingColors) {
+            foreach (var color in highlighting.NamedHighlightingColors)
+            {
                 color.FontWeight = null;
             }
             TextViewContent.SyntaxHighlighting = null;
@@ -129,7 +134,6 @@ namespace VisualGGPK2
             mi = new MenuItem { Header = "Write png into dds" };
             mi.Click += OnWriteImageClicked;
             TreeMenu.Items.Add(mi);
-
             var imageMenu = new ContextMenu();
             mi = new MenuItem { Header = "Save as png" };
             mi.Click += OnSavePngClicked;
@@ -142,7 +146,7 @@ namespace VisualGGPK2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadSettings();
+            //LoadSettings();
             pRing.Visibility = Visibility.Visible;
         }
 
@@ -157,7 +161,6 @@ namespace VisualGGPK2
             };
             if (ofd.ShowDialog() != true) return false;
 
-
             // Show the ProgressRing before starting the loading operation
             pRing.IsIndeterminate = true;
             pRing.Visibility = Visibility.Visible;
@@ -167,7 +170,7 @@ namespace VisualGGPK2
                 // Load the GGPKContainer asynchronously
                 ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, false));
                 // Save FilePath
-                FilePath = ofd.FileName;
+                officialPath = ofd.FileName;
                 Dispatcher.Invoke(SaveSettings);
 
                 // Populate the TreeView
@@ -212,7 +215,7 @@ namespace VisualGGPK2
                 // Load the GGPKContainer asynchronously
                 ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, true));
                 // Save FilePath
-                FilePath = ofd.FileName;
+                steamPath = ofd.FileName;
                 Dispatcher.Invoke(SaveSettings);
 
                 // Populate the TreeView
@@ -235,7 +238,7 @@ namespace VisualGGPK2
             }
 
             return true;
-        }        
+        }
 
         private async Task<bool> GarenaLoaded()
         {
@@ -257,7 +260,7 @@ namespace VisualGGPK2
                 // Load the GGPKContainer asynchronously
                 ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
                 // Save FilePath
-                FilePath = ofd.FileName;
+                garenaPath = ofd.FileName;
                 Dispatcher.Invoke(SaveSettings);
 
                 // Populate the TreeView
@@ -282,49 +285,49 @@ namespace VisualGGPK2
             return true;
         }
 
-        private async Task<bool> TencentLoaded()
-        {
-            var ofd = new OpenFileDialog
-            {
-                DefaultExt = "ggpk",
-                FileName = "Content.ggpk",
-                Filter = "GGPK File|*.ggpk",
-                InitialDirectory = tencentPath
-            };
-            if (ofd.ShowDialog() != true) return false;
-            // Show the ProgressRing before starting the loading operation
-            pRing.IsIndeterminate = true;
-            pRing.Visibility = Visibility.Visible;
+        //private async Task<bool> TencentLoaded()
+        //{
+        //    var ofd = new OpenFileDialog
+        //    {
+        //        DefaultExt = "ggpk",
+        //        FileName = "Content.ggpk",
+        //        Filter = "GGPK File|*.ggpk",
+        //        InitialDirectory = tencentPath
+        //    };
+        //    if (ofd.ShowDialog() != true) return false;
+        //    // Show the ProgressRing before starting the loading operation
+        //    pRing.IsIndeterminate = true;
+        //    pRing.Visibility = Visibility.Visible;
 
-            try
-            {
-                // Load the GGPKContainer asynchronously
-                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
-                // Save FilePath
-                FilePath = ofd.FileName;
-                Dispatcher.Invoke(SaveSettings);
+        //    try
+        //    {
+        //        // Load the GGPKContainer asynchronously
+        //        ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
+        //        // Save FilePath
+        //        tencentPath = ofd.FileName;
+        //        Dispatcher.Invoke(SaveSettings);
 
-                // Populate the TreeView
-                Tree.Items.Clear();
-                var root = CreateNode(ggpkContainer.rootDirectory);
-                Tree.Items.Add(root);
-                root.IsExpanded = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                // Hide the ProgressRing after the loading operation is done
-                pRing.IsIndeterminate = false;
-                pRing.Visibility = Visibility.Hidden;
-                tooltip.Visibility = Visibility.Hidden;
-                copyright.Visibility = Visibility.Hidden;
-            }
+        //        // Populate the TreeView
+        //        Tree.Items.Clear();
+        //        var root = CreateNode(ggpkContainer.rootDirectory);
+        //        Tree.Items.Add(root);
+        //        root.IsExpanded = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //    finally
+        //    {
+        //        // Hide the ProgressRing after the loading operation is done
+        //        pRing.IsIndeterminate = false;
+        //        pRing.Visibility = Visibility.Hidden;
+        //        tooltip.Visibility = Visibility.Hidden;
+        //        copyright.Visibility = Visibility.Hidden;
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         private static string GetSteamInstallPath()
         {
@@ -333,7 +336,6 @@ namespace VisualGGPK2
             return installPath ?? defaultPath;
         }
 
-
         private void SaveSettings()
         {
             try
@@ -341,11 +343,12 @@ namespace VisualGGPK2
                 using var bw = new BinaryWriter(File.Create(bin_path));
 
                 // String
+                bw.Write(FilePath);
                 bw.Write(officialPath);
                 bw.Write(steamPath);
                 bw.Write(epicPath);
                 bw.Write(garenaPath);
-                bw.Write(tencentPath);
+                //bw.Write(tencentPath);
             }
             catch (Exception ex)
             {
@@ -365,11 +368,12 @@ namespace VisualGGPK2
                 using var br = new BinaryReader(File.OpenRead(bin_path));
 
                 // String
+                FilePath = br.ReadString();
                 officialPath = br.ReadString();
                 steamPath = br.ReadString();
                 epicPath = br.ReadString();
                 garenaPath = br.ReadString();
-                tencentPath = br.ReadString();
+                //tencentPath = br.ReadString();
             }
             catch (Exception ex)
             {
@@ -763,7 +767,8 @@ namespace VisualGGPK2
                 tvi.IsExpanded = true; // Expand when left clicked (but not on arrow)
         }
 
-        private void OnDragEnter(object sender, DragEventArgs e) {
+        private void OnDragEnter(object sender, DragEventArgs e)
+        {
             e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
         }
 
@@ -1610,6 +1615,9 @@ namespace VisualGGPK2
             e.Handled = true;
         }
 
+        
+
+
         private void AllowGameOpen_Click(object sender, RoutedEventArgs e)
         {
             ggpkContainer.fileStream.Close();
@@ -1651,68 +1659,6 @@ namespace VisualGGPK2
             }
         }
 
-        //private async void AllowGameOpen_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ggpkContainer.fileStream.Close();
-        //    var fi = new FileInfo(FilePath);
-        //    var t = fi.LastWriteTimeUtc;
-        //    var l = fi.Length;
-        //    var dir = Path.GetDirectoryName(FilePath);
-        //    Process.Start(new ProcessStartInfo(dir + @"\PathOfExile_x64.exe")
-        //    {
-        //        WorkingDirectory = dir
-        //    });
-
-        //loop:
-        //    try
-        //    {
-        //        var uiMessageBox = new Wpf.Ui.Controls.MessageBox
-        //        {
-        //            Width = 140,
-        //            Height = 40,
-        //            Background = new SolidColorBrush(Color.FromRgb(0x1F, 0x24, 0x28)),
-        //            Title = "game mode   ",
-        //            //Content = "Close this to enter in Edit Mode again!"
-        //        };
-        //        await uiMessageBox.ShowDialogAsync();
-
-        //        fi = new FileInfo(FilePath);
-        //        if (fi.LastWriteTimeUtc != t || fi.Length != l)
-        //        {
-        //            //MessageBox.Show(this, "The Content.ggpk has been modified, Now it's going to be reloaded", "GGPK Changed", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-        //            Tree.Items.Clear();
-        //            //TextViewContent.Text = "Loading . . .";
-        //            TextViewContent.Visibility = Visibility.Visible;
-        //            FilterButton.IsEnabled = false;
-        //            AllowGameOpen.IsEnabled = false;
-
-        //            // Initial GGPK
-        //            await Task.Run(() => ggpkContainer = new GGPKContainer(FilePath, BundleMode, SteamMode));
-
-        //            var root = CreateNode(ggpkContainer.rootDirectory);
-        //            Tree.Items.Add(root); // Initial TreeView
-        //            root.IsExpanded = true;
-
-        //            FilterButton.IsEnabled = true;
-        //            if (!SteamMode) AllowGameOpen.IsEnabled = true;
-
-        //            TextViewContent.AppendText("\r\n Done!");
-        //        }
-        //        else
-        //        {
-        //            ggpkContainer.fileStream = File.Open(FilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
-        //            ggpkContainer.Reader = new BinaryReader(ggpkContainer.fileStream);
-        //            ggpkContainer.Writer = new BinaryWriter(ggpkContainer.fileStream);
-        //        }
-        //    }
-        //    catch (IOException)
-        //    {
-        //        MessageBox.Show(this, "Close the game first!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        goto loop;
-        //    }
-        //}
-
         public Task RestoreIndex()
         {
             try
@@ -1747,8 +1693,10 @@ namespace VisualGGPK2
 
         private async void Restore_Click(object sender, RoutedEventArgs e)
         {
-            await Task.Run(async () => {
-                await Dispatcher.Invoke(async () => {
+            await Task.Run(async () =>
+            {
+                await Dispatcher.Invoke(async () =>
+                {
                     await Restore_Official(sender, e);
                 });
             });
@@ -1820,31 +1768,34 @@ namespace VisualGGPK2
         private async void International_Click(object sender, RoutedEventArgs e)
         {
             try { if (!await OfficialLoaded()) return; }
-            catch { //...
+            catch
+            { //...
             }
         }
 
         private async void Steam_Click(object sender, RoutedEventArgs e)
         {
             try { if (!await SteamLoaded()) return; }
-            catch { //...
+            catch
+            { //...
             }
         }
 
         private async void Garena_Click(object sender, RoutedEventArgs e)
         {
             try { if (!await GarenaLoaded()) return; }
-            catch { //...
+            catch
+            { //...
             }
         }
 
-        private async void Tencent_Click(object sender, RoutedEventArgs e)
-        {
-            try { if (!await TencentLoaded()) return; }
-            catch { //...
-            }
-        }
-        
+        //private async void Tencent_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try { if (!await TencentLoaded()) return; }
+        //    catch { //...
+        //    }
+        //}
+
         #endregion wpf.ui
 
         //private void TextViewContent_KeyDown(object sender, KeyEventArgs e)
