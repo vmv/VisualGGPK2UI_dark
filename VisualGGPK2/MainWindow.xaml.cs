@@ -58,8 +58,7 @@ namespace VisualGGPK2
         private string steamPath = GetSteamInstallPath();
         private string epicPath = Directory.Exists(@"C:\Program Files\Epic Games\PathOfExile\Bundles2") ? @"C:\Program Files\Epic Games\PathOfExile\Bundles2" : string.Empty;
         private string garenaPath = Directory.Exists(@"C:\Program Files (x86)\Garena\Games\32808") ? @"C:\Program Files (x86)\Garena\Games\32808" : string.Empty;
-
-        //private string tencentPath = string.Empty;
+        private string tencentPath = string.Empty;
         private readonly string syntax_colors_CSharp = Path.Combine(Environment.CurrentDirectory, "C#.xaml");
 
 
@@ -1789,13 +1788,13 @@ namespace VisualGGPK2
             }
         }
 
-        //private async void Tencent_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try { if (!await TencentLoaded()) return; }
-        //    catch { //...
-        //    }
-        //}
-
+        private async void Tencent_Click(object sender, RoutedEventArgs e)
+        {
+            try { if (!await TencentLoaded()) return; }
+            catch { //...
+            }
+        }
+        
         #endregion wpf.ui
 
         //private void TextViewContent_KeyDown(object sender, KeyEventArgs e)
