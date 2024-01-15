@@ -131,11 +131,4 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
-  <ItemGroup>
-  <KnownAppHostPack Update="@(KnownAppHostPack)">
-    <AppHostPackVersion Condition="'%(TargetFramework)' == 'TARGETFRAMEWORK'">EXISTINGVERSION</AppHostPackVersion>
-  </KnownAppHostPack>
-</ItemGroup>
-
-
 </Project>
