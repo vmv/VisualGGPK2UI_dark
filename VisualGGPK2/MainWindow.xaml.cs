@@ -144,141 +144,215 @@ namespace VisualGGPK2
             pRing.Visibility = Visibility.Visible;
         }
 
-        private async Task<bool> OfficialLoaded()
+
+        private async Task<bool> LoadGGPKContainer(string defaultExt, string fileName, string filter, string initialDirectory, bool isSteam = false, bool isGarena = false)
+    {
+        var ofd = new OpenFileDialog
         {
-            var ofd = new OpenFileDialog
-            {
-                DefaultExt = "ggpk",
-                FileName = "Content.ggpk",
-                Filter = "GGPK File|*.ggpk",
-                InitialDirectory = officialPath
-            };
-            if (ofd.ShowDialog() != true) return false;
+            DefaultExt = defaultExt,
+            FileName = fileName,
+            Filter = filter,
+            InitialDirectory = initialDirectory
+        };
+        if (ofd.ShowDialog() != true) return false;
 
+        // Show the ProgressRing before starting the loading operation
+        pRing.IsIndeterminate = true;
+        pRing.Visibility = Visibility.Visible;
 
-            // Show the ProgressRing before starting the loading operation
-            pRing.IsIndeterminate = true;
-            pRing.Visibility = Visibility.Visible;
-
-            try
-            {
-                // Load the GGPKContainer asynchronously
-                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, false));
-                // Save FilePath
-                FilePath = ofd.FileName;
-                Dispatcher.Invoke(SaveSettings);
-
-                // Populate the TreeView
-                Tree.Items.Clear();
-                var root = CreateNode(ggpkContainer.rootDirectory);
-                Tree.Items.Add(root);
-                root.IsExpanded = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                // Hide the ProgressRing after the loading operation is done
-                pRing.IsIndeterminate = false;
-                pRing.Visibility = Visibility.Hidden;
-                tooltip.Visibility = Visibility.Hidden;
-                copyright.Visibility = Visibility.Hidden;
-            }
-
-            return true;
-        }
-
-        private async Task<bool> SteamLoaded()
+        try
         {
-            var ofd = new OpenFileDialog
+            // Load the GGPKContainer asynchronously
+            if (isSteam)
             {
-                DefaultExt = "bin",
-                FileName = "_.index.bin",
-                Filter = "bin file|*.bin",
-                InitialDirectory = steamPath
-            };
-            if (ofd.ShowDialog() != true) return false;
-
-            // Show the ProgressRing before starting the loading operation
-            pRing.IsIndeterminate = true;
-            pRing.Visibility = Visibility.Visible;
-
-            try
-            {
-                // Load the GGPKContainer asynchronously
                 ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, true));
-                // Save FilePath
-                FilePath = ofd.FileName;
-                Dispatcher.Invoke(SaveSettings);
-
-                // Populate the TreeView
-                Tree.Items.Clear();
-                var root = CreateNode(ggpkContainer.rootDirectory);
-                Tree.Items.Add(root);
-                root.IsExpanded = true;
             }
-            catch (Exception ex)
+            else if (isGarena)
             {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                // Hide the ProgressRing after the loading operation is done
-                pRing.IsIndeterminate = false;
-                pRing.Visibility = Visibility.Hidden;
-                tooltip.Visibility = Visibility.Hidden;
-                copyright.Visibility = Visibility.Hidden;
-            }
-
-            return true;
-        }        
-
-        private async Task<bool> GarenaLoaded()
-        {
-            var ofd = new OpenFileDialog
-            {
-                DefaultExt = "ggpk",
-                FileName = "Content.ggpk",
-                Filter = "GGPK File|*.ggpk",
-                InitialDirectory = garenaPath
-            };
-            if (ofd.ShowDialog() != true) return false;
-
-            // Show the ProgressRing before starting the loading operation
-            pRing.IsIndeterminate = true;
-            pRing.Visibility = Visibility.Visible;
-
-            try
-            {
-                // Load the GGPKContainer asynchronously
                 ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
-                // Save FilePath
-                FilePath = ofd.FileName;
-                Dispatcher.Invoke(SaveSettings);
-
-                // Populate the TreeView
-                Tree.Items.Clear();
-                var root = CreateNode(ggpkContainer.rootDirectory);
-                Tree.Items.Add(root);
-                root.IsExpanded = true;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                // Hide the ProgressRing after the loading operation is done
-                pRing.IsIndeterminate = false;
-                pRing.Visibility = Visibility.Hidden;
-                tooltip.Visibility = Visibility.Hidden;
-                copyright.Visibility = Visibility.Hidden;
+                ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, false));
             }
 
-            return true;
+            // Save FilePath
+            FilePath = ofd.FileName;
+            Dispatcher.Invoke(SaveSettings);
+
+            // Populate the TreeView
+            Tree.Items.Clear();
+            var root = CreateNode(ggpkContainer.rootDirectory);
+            Tree.Items.Add(root);
+            root.IsExpanded = true;
         }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        finally
+        {
+            // Hide the ProgressRing after the loading operation is done
+            pRing.IsIndeterminate = false;
+            pRing.Visibility = Visibility.Hidden;
+            tooltip.Visibility = Visibility.Hidden;
+            copyright.Visibility = Visibility.Hidden;
+        }
+
+        return true;
+    }
+
+    private async Task<bool> OfficialLoaded()
+    {
+        return await LoadGGPKContainer("ggpk", "Content.ggpk", "GGPK File|*.ggpk", officialPath);
+    }
+
+    private async Task<bool> SteamLoaded()
+    {
+        return await LoadGGPKContainer("bin", "_.index.bin", "bin file|*.bin", steamPath, true);
+    }
+
+    private async Task<bool> GarenaLoaded()
+    {
+        return await LoadGGPKContainer("ggpk", "Content.ggpk", "GGPK File|*.ggpk", garenaPath, false, true);
+    }
+
+
+        //private async Task<bool> OfficialLoaded()
+        //{
+        //    var ofd = new OpenFileDialog
+        //    {
+        //        DefaultExt = "ggpk",
+        //        FileName = "Content.ggpk",
+        //        Filter = "GGPK File|*.ggpk",
+        //        InitialDirectory = officialPath
+        //    };
+        //    if (ofd.ShowDialog() != true) return false;
+
+
+        //    // Show the ProgressRing before starting the loading operation
+        //    pRing.IsIndeterminate = true;
+        //    pRing.Visibility = Visibility.Visible;
+
+        //    try
+        //    {
+        //        // Load the GGPKContainer asynchronously
+        //        ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, false));
+        //        // Save FilePath
+        //        FilePath = ofd.FileName;
+        //        Dispatcher.Invoke(SaveSettings);
+
+        //        // Populate the TreeView
+        //        Tree.Items.Clear();
+        //        var root = CreateNode(ggpkContainer.rootDirectory);
+        //        Tree.Items.Add(root);
+        //        root.IsExpanded = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //    finally
+        //    {
+        //        // Hide the ProgressRing after the loading operation is done
+        //        pRing.IsIndeterminate = false;
+        //        pRing.Visibility = Visibility.Hidden;
+        //        tooltip.Visibility = Visibility.Hidden;
+        //        copyright.Visibility = Visibility.Hidden;
+        //    }
+
+        //    return true;
+        //}
+
+        //private async Task<bool> SteamLoaded()
+        //{
+        //    var ofd = new OpenFileDialog
+        //    {
+        //        DefaultExt = "bin",
+        //        FileName = "_.index.bin",
+        //        Filter = "bin file|*.bin",
+        //        InitialDirectory = steamPath
+        //    };
+        //    if (ofd.ShowDialog() != true) return false;
+
+        //    // Show the ProgressRing before starting the loading operation
+        //    pRing.IsIndeterminate = true;
+        //    pRing.Visibility = Visibility.Visible;
+
+        //    try
+        //    {
+        //        // Load the GGPKContainer asynchronously
+        //        ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName, false, true));
+        //        // Save FilePath
+        //        FilePath = ofd.FileName;
+        //        Dispatcher.Invoke(SaveSettings);
+
+        //        // Populate the TreeView
+        //        Tree.Items.Clear();
+        //        var root = CreateNode(ggpkContainer.rootDirectory);
+        //        Tree.Items.Add(root);
+        //        root.IsExpanded = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //    finally
+        //    {
+        //        // Hide the ProgressRing after the loading operation is done
+        //        pRing.IsIndeterminate = false;
+        //        pRing.Visibility = Visibility.Hidden;
+        //        tooltip.Visibility = Visibility.Hidden;
+        //        copyright.Visibility = Visibility.Hidden;
+        //    }
+
+        //    return true;
+        //}        
+
+        //private async Task<bool> GarenaLoaded()
+        //{
+        //    var ofd = new OpenFileDialog
+        //    {
+        //        DefaultExt = "ggpk",
+        //        FileName = "Content.ggpk",
+        //        Filter = "GGPK File|*.ggpk",
+        //        InitialDirectory = garenaPath
+        //    };
+        //    if (ofd.ShowDialog() != true) return false;
+
+        //    // Show the ProgressRing before starting the loading operation
+        //    pRing.IsIndeterminate = true;
+        //    pRing.Visibility = Visibility.Visible;
+
+        //    try
+        //    {
+        //        // Load the GGPKContainer asynchronously
+        //        ggpkContainer = await Task.Run(() => new GGPKContainer(ofd.FileName));
+        //        // Save FilePath
+        //        FilePath = ofd.FileName;
+        //        Dispatcher.Invoke(SaveSettings);
+
+        //        // Populate the TreeView
+        //        Tree.Items.Clear();
+        //        var root = CreateNode(ggpkContainer.rootDirectory);
+        //        Tree.Items.Add(root);
+        //        root.IsExpanded = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //    finally
+        //    {
+        //        // Hide the ProgressRing after the loading operation is done
+        //        pRing.IsIndeterminate = false;
+        //        pRing.Visibility = Visibility.Hidden;
+        //        tooltip.Visibility = Visibility.Hidden;
+        //        copyright.Visibility = Visibility.Hidden;
+        //    }
+
+        //    return true;
+        //}
 
         //private async Task<bool> TencentLoaded()
         //{
@@ -338,16 +412,13 @@ namespace VisualGGPK2
             {
                 using var bw = new BinaryWriter(File.Create(bin_path));
 
-                // String
                 bw.Write(officialPath);
                 bw.Write(steamPath);
                 bw.Write(epicPath);
                 bw.Write(garenaPath);
-                //bw.Write(tencentPath);
             }
             catch (Exception ex)
             {
-                // ignored
 #if DEBUG
 				Debug.WriteLine(ex.Message);
 #endif
@@ -359,19 +430,15 @@ namespace VisualGGPK2
             try
             {
                 if (!File.Exists(bin_path)) return;
-
                 using var br = new BinaryReader(File.OpenRead(bin_path));
 
-                // String
                 officialPath = br.ReadString();
                 steamPath = br.ReadString();
                 epicPath = br.ReadString();
                 garenaPath = br.ReadString();
-                //tencentPath = br.ReadString();
             }
             catch (Exception ex)
             {
-                // ignored
 #if DEBUG
 				Debug.WriteLine(ex.Message);
 #endif

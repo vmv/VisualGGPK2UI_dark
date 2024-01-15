@@ -1126,7 +1126,7 @@
                     BorderThickness="1"
                     Click="AllowGameOpen_Click"
                     FontSize="20"
-                    Foreground="LightGray"
+                    Foreground="MediumAquamarine"
                     ToolTipService.ToolTip="Open Game">
                     <ic:SymbolIcon IsFilled="False" Symbol="DesktopCheckmark" />
                 </ui:Button>
